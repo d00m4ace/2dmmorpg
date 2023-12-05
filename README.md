@@ -9,16 +9,16 @@ and is included in the project. Namely a generator of sprite atlases, a generato
 # Development phase 1
 
 ## TODO CLIENT.
-1 Make player login screen
-2 Login to the game 
-3 Display the player in the game world and other players
-4 Basic player movement in the world
-5 Exit the game
+1. Make player login screen
+2. Login to the game 
+3. Display the player in the game world and other players
+4. Basic player movement in the world
+5. Exit the game
 
 ## TODO SERVER
-1 Handling player login to the game, registering new players in the game database, logging login to the game
-2 Adding a player to the game world
-3 Processing all players and their movements in the world
-4 Disconnecting a player from the game world
-5 Logging every player in the world into the database
+1. Handling player login to the game, registering new players in the game database, logging login to the game
+2. Adding a player to the game world
+3. Processing all players and their movements in the world
+4. Disconnecting a player from the game world
+5. Logging every player in the world into the database
 
