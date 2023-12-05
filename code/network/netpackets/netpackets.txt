@@ -1,0 +1,71 @@
+NETPACKET_CLIENT_HI = NETPACKETS_START_ID;
+uint16 clnt_vers;
+uint16 clnt_platform_id;
+uint16 clnt_send_limit;
+uint16 clnt_job_id;
+
+NETPACKET_CLIENT_HANDSHAKE;
+uint16 clnt_handshake[4];
+
+NETPACKET_SERVER_HI;
+uint16 srvr_vers;
+uint16 srvr_platform_id;
+uint16 srvr_send_limit;
+uint16 srvr_handshake[4];
+
+NETPACKET_SERVER_WELCOME;
+
+NETPACKET_CLIENT_ECHO;
+uint8 echo_data[256];
+
+NETPACKET_SERVER_ECHO;
+uint8 echo_data[256];
+
+NETPACKET_GET_FILE_INFO;
+char file_name[FILENAME_MAX_SIZE];
+
+NETPACKET_FILE_INFO;
+char file_name[FILENAME_MAX_SIZE];
+int64 modified_timestamp;
+
+NETPACKET_DOWNLOAD_FILE;
+char file_name[FILENAME_MAX_SIZE];
+
+NETPACKET_ON_INFO;
+
+NETPACKET_ON_IDLE;
+
+NETPACKET_ON_UPDATE;
+
+NETPACKET_ON_CONTINUE;
+
+NETPACKET_ON_COMPLETE;
+
+NETPACKET_DATASET_5000;
+int32 data_size;
+uint8 data[5000];
+
+NETPACKET_DATASET_1000;
+int32 data_size;
+uint8 data[1000];
+
+NETPACKET_DATASET_256;
+int32 data_size;
+uint8 data[256];
+
+NETPACKET_DATASET_128;
+int32 data_size;
+uint8 data[128];
+
+NETPACKET_DATASET_64;
+int32 data_size;
+uint8 data[64];
+
+NETPACKET_DATASET_32;
+int32 data_size;
+uint8 data[32];
+
+NETPACKET_DATASET_16;
+int32 data_size;
+uint8 data[16];
+

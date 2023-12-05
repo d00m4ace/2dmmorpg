@@ -1,0 +1,20 @@
+{
+	"name": "example-project",
+	"version-string": "0.0.1",
+	"license": "MIT",
+	"dependencies": [
+		{
+			"name": "raylib",
+			"version>=": "4.5.0#1"
+		},
+		{
+			"name": "pthread",
+			"version>=": "3.0.0#2"
+		},
+		{
+			"name": "libpq",
+			"version>=": "15.3#1"
+		}
+	],
+	"builtin-baseline": "436a061a544c124200200517b9ee55c5bb1b7a26"
+}

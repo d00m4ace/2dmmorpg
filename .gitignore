@@ -1,0 +1,19 @@
+# Visual Studio 2015/2017 cache/options directory
+.vs/
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+[Xx]64/
+[Xx]86/
+[Bb]uild/
+
+vcpkg_installed/
+
+*.7z
+
+/output/
+!projects/3rd-party-libs/raylib-4.2.0/parser/output/
+
+/projects/vs2022.client/output/
+/projects/vs2022.server/output/

@@ -1,0 +1,1 @@
+tools\codegen.exe -gen_src_file=code/network/netpackets/netpackets.txt -gen_dst_file=code/network/netpackets/netpackets -enum_name=ENUM_NETPACKETS

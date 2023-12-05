@@ -1,0 +1,10 @@
+https://devblogs.microsoft.com/cppblog/vcpkg-is-now-included-with-visual-studio/
+
+vcpkg integrate install
+
+vcpkg list
+
+vcpkg search raylib
+
+vcpkg install --triplet x64-windows-static
+

@@ -1,0 +1,1 @@
+tools\imgimport.exe -s=res/gui/icons16 -tile=16 -d=output/img_import -enm_old=res/img_import/img_i16_enums.txt -color_pal=res/img_import/color_palette.txt -enm_prefix=IMG_I16_ -img=img_i16 -enm=img_i16_enums.txt -enm_start_id=IMG_I16_ENUMS_OFFSET
