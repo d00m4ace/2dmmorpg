@@ -1,0 +1,1 @@
+GUI_ELEM* gui_text(const char* txt);

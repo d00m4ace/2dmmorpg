@@ -49,7 +49,8 @@
 #include "network/myserver.c"
 #endif // _GAMESERVER
 #ifdef _GAMECLIENT
-#include "network/myclient.c"
+//#include "network/myclient.c"
+#include "2dmmorpg/client/gameclient.c"
 #endif // _GAMECLIENT
 #endif // _NETWORK
 ///////////////////////////////////////////////////////////////

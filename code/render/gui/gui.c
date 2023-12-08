@@ -55,7 +55,7 @@ void gui_init(void)
 
 	gui_style_init();
 
-	gui_inpt = (GUI_INPUT){ 0 };
+	gui_inpt = (GUI_INPUT) { 0 };
 	gui_inpt.drag_delta_min = 5;
 
 	// TODO: CHECK ON ANDROID
@@ -156,7 +156,7 @@ void gui_input_process(void)
 		gui_inpt.is_released = gui_inpt.is_pressed;
 		gui_inpt.is_pressed = false;
 		gui_inpt.is_drag = false;
-		gui_inpt.drag_delta = (p32){ 0 };
+		gui_inpt.drag_delta = (p32) { 0 };
 	}
 	//----------------------------------------------------------------------------------
 	gui_input_set_processed(false);
@@ -254,17 +254,20 @@ void gui_draw(void)
 		if(gui_inpt.elm_released)
 			elm_released_count++;
 
-		rd2_font_print(game_font_get(GAME_FONT_ID_MICROFONT_BORDER),
-			txt_format("released:%d drag:%s start: %d,%d drag: %d,%d wheel: %0.2f\nelm_rel:%d %s",
-				released_count,
-				gui_inpt.is_drag ? "TRUE" : "FALSE",
-				gui_inpt.pos_start.x, gui_inpt.pos_start.y,
-				gui_inpt.drag_delta.x, gui_inpt.drag_delta.y,
-				mouse_wheel,
-				elm_released_count,
-				gui_inpt.elm_pressed ? "elm_pressed" : ""
-			),
-			0, 0, 1, gui_palette_get()[PAL_TRANSPARENT], gui_palette_get()[PAL_WHITE], FNT_FLG_DRAW);
+		if(false)
+		{
+			rd2_font_print(game_font_get(GAME_FONT_ID_MICROFONT_BORDER),
+				txt_format("released:%d drag:%s start: %d,%d drag: %d,%d wheel: %0.2f\nelm_rel:%d %s",
+					released_count,
+					gui_inpt.is_drag ? "TRUE" : "FALSE",
+					gui_inpt.pos_start.x, gui_inpt.pos_start.y,
+					gui_inpt.drag_delta.x, gui_inpt.drag_delta.y,
+					mouse_wheel,
+					elm_released_count,
+					gui_inpt.elm_pressed ? "elm_pressed" : ""
+				),
+				0, 0, 1, gui_palette_get()[PAL_TRANSPARENT], gui_palette_get()[PAL_WHITE], FNT_FLG_DRAW);
+		}
 
 		rd2_bubble(gui_inpt.pos.x - 1, gui_inpt.pos.y - 1, 3, 3, gui_color(PAL_AQUAMARINE), gui_color(PAL_BLUE));
 	}

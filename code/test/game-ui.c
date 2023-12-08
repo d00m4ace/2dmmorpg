@@ -27,7 +27,7 @@ int main(void)
 		gui_add_display(dsp);
 
 		int32 w = 320, h = 180;
-		dsp->pos = (p32){ (game_scr_width() - w) / 2,(game_scr_height() - h) / 2 };
+		dsp->pos = (p32) { (game_scr_width() - w) / 2,(game_scr_height() - h) / 2 };
 
 		GUI_PLANE* pln = gui_plane(-1, (p32) { w, h });
 		gui_display_add_plane(dsp, pln);
@@ -38,14 +38,14 @@ int main(void)
 		{
 			GUI_ELEM* tgl = gui_toggle_combo("[ ] первый", "[V] второй", "[*] третий");
 			gui_toggle_set_fixed_size(tgl, (p32) { 24 * 4, 24 });
-			tgl->origin = (p32){ 100,0 };
+			tgl->origin = (p32) { 100,0 };
 
 			gui_plane_add_elm(pln, tgl);
 		}
 
 		{
 			GUI_ELEM* ti = gui_text_input("");
-			ti->origin = (p32){ 50,25 };
+			ti->origin = (p32) { 50,25 };
 
 			gui_plane_add_elm(pln, ti);
 		}
@@ -54,7 +54,7 @@ int main(void)
 		{
 			GUI_ELEM* ti = gui_text_input("A null-terminated byte string (NTBS) is a sequence of nonzero bytes followed by a byte with value zero (the terminating null character). Each byte in a byte string encodes one character of some character set.");
 			gui_element_set_style_and_size_min(ti, GUI_STYLE_TEXT_INPUT_LONG);
-			ti->origin = (p32){ 50,50 };
+			ti->origin = (p32) { 50,50 };
 
 			gui_plane_add_elm(pln, ti);
 		}
@@ -62,7 +62,7 @@ int main(void)
 		{
 			GUI_ELEM* tbs = gui_tabs_combo("1", "2", "3");
 			gui_tabs_set_fixed_size(tbs, (p32) { 24, 24 });
-			tbs->origin = (p32){ 100,100 };
+			tbs->origin = (p32) { 100,100 };
 
 			gui_plane_add_elm(pln, tbs);
 		}
@@ -80,13 +80,11 @@ int main(void)
 		//----------------------------------------------------------------------------------
 		// Game Update
 		//----------------------------------------------------------------------------------
-		if(hal_key_pressed(KEY_ENTER) || hal_gesture_detected(GESTURE_TAP)) game_sound_play(GAME_SOUND_ID_BIPBIP);
-		if(hal_key_pressed(KEY_SPACE) || hal_gesture_detected(GESTURE_DOUBLETAP)) game_sound_play(GAME_SOUND_ID_BIUBIU);
+		if(gui_kb_last_key() == KEY_ENTER || hal_gesture_detected(GESTURE_TAP)) game_sound_play(GAME_SOUND_ID_BIPBIP);
+		if(gui_kb_last_key() == KEY_SPACE || hal_gesture_detected(GESTURE_DOUBLETAP)) game_sound_play(GAME_SOUND_ID_BIUBIU);
 
 		if(gui_kb_last_key() == KEY_PRINT_SCREEN)
-		{
 			hal_save_image(*rd2_scr_get(), "screenshot.png");
-		}
 		//----------------------------------------------------------------------------------
 		// clear screen
 		//----------------------------------------------------------------------------------

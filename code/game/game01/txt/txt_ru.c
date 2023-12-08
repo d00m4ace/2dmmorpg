@@ -8,4 +8,7 @@ void game_txt_ru(const char* txt[])
 	txt[TXT_ID_CANCEL] = "Отментить";
 
 	txt[TXT_ID_ENTER] = "Ввод";
+
+	txt[TXT_ID_USER_NAME] = "ИМЯ ПОЛЬЗОВАТЕЛЯ";
+	txt[TXT_ID_USER_NAME_FLD] = "ИМЯ ПОЛЬЗОВАТЕЛЯ:";
 };

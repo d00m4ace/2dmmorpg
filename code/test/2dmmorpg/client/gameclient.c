@@ -1,3 +1,5 @@
+#include "gamescreens/screenlogin.c"
+
 //--------------------------------------------------------------------------------------
 int main(void)
 {
@@ -25,16 +27,12 @@ int main(void)
 	{
 		GUI_DISPLAY* dsp = gui_display(0);
 		gui_add_display(dsp);
-
-		int32 w = 320, h = 180;
-		dsp->pos = (p32){ (game_scr_width() - w) / 2,(game_scr_height() - h) / 2 };
-
-		GUI_PLANE* pln = gui_plane(-1, (p32) { w, h });
-		gui_display_add_plane(dsp, pln);
-
-		pln->flags |= GUI_FLG_INPUTLOCK | GUI_FLG_SHADOWSCREEN;
-		//pln->flags |= GUI_FLG_UNSCROLLABLE;
 	}
+
+	{
+		screenlogin_init();
+	}
+
 	//--------------------------------------------------------------------------------------
 	// Main game loop
 	//--------------------------------------------------------------------------------------
@@ -48,8 +46,7 @@ int main(void)
 		if(gui_kb_last_key() == KEY_PRINT_SCREEN)
 			hal_save_image(*rd2_scr_get(), "screenshot.png");
 		//----------------------------------------------------------------------------------
-		rd2_rect_fill(0, 0, 1000, 1000, ARGB32(0, 200, 200, 255));
-		//rd2_rect(0, 0, game_scr_width(), game_scr_height(), ARGB32(rnd_u8(), rnd_u8(), rnd_u8(), 255));
+		rd2_rect_fill(0, 0, 1000, 1000, gui_color(PAL_SILVER));
 		//----------------------------------------------------------------------------------		
 
 		//----------------------------------------------------------------------------------
@@ -68,10 +65,6 @@ int main(void)
 			if(elm != NULL && elm->pln)
 				gui_plane_scroll_to(elm->pln, elm->pos);
 		}
-
-		rd2_box(8, 100, 8, 8, gui_color(PAL_AQUAMARINE), gui_color(PAL_BLUE));
-		rd2_tile(8, 110, 8, 8, gui_color(PAL_AQUAMARINE), gui_color(PAL_BLUE));
-		rd2_bubble(8, 120, 8, 8, gui_color(PAL_AQUAMARINE), gui_color(PAL_BLUE));
 		//----------------------------------------------------------------------------------
 
 		//----------------------------------------------------------------------------------
@@ -85,8 +78,7 @@ int main(void)
 		//----------------------------------------------------------------------------------
 		hal_draw_begin();
 
-		hal_cls(ARGB32(0, 0, 255, 255));
-		//hal_cls(ARGB32(0, 0, 0, 255));
+		hal_cls(ARGB32(0, 0, 0, 255));
 
 		game_scr_draw();
 
@@ -102,3 +94,4 @@ int main(void)
 	game_shutdown();
 	return 0;
 }
+//--------------------------------------------------------------------------------------

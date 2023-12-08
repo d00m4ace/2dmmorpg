@@ -25,6 +25,7 @@ GUI_STYLE gui_style_button(void);
 GUI_STYLE gui_style_button_tile(void);
 GUI_STYLE gui_style_button_long(void);
 GUI_STYLE gui_style_button_keyboard(void);
+GUI_STYLE gui_style_text(void);
 GUI_STYLE gui_style_text_input(void);
 GUI_STYLE gui_style_text_input_long(void);
 GUI_STYLE gui_style_progressbar(void);

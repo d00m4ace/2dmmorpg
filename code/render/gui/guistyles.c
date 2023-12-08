@@ -145,6 +145,30 @@ GUI_STYLE gui_style_button_keyboard(void)
 	return style;
 }
 
+GUI_STYLE gui_style_text(void)
+{
+	GUI_STYLE style = gui_style_button();
+
+	style.color_background[GUI_ELEM_STATE_NORMAL] = GUI_DEFAULT_TRANSPARENT_COLOR;
+	style.color_background[GUI_ELEM_STATE_PRESSED] = GUI_DEFAULT_TRANSPARENT_COLOR;
+	style.color_background[GUI_ELEM_STATE_RELEASED] = GUI_DEFAULT_TRANSPARENT_COLOR;
+	style.color_background[GUI_ELEM_STATE_FOCUSED] = GUI_DEFAULT_TRANSPARENT_COLOR;
+	style.color_background[GUI_ELEM_STATE_SELECTED] = GUI_DEFAULT_TRANSPARENT_COLOR;
+	style.color_background[GUI_ELEM_STATE_DISABLED] = GUI_DEFAULT_TRANSPARENT_COLOR;
+
+	style.color_border[GUI_ELEM_STATE_NORMAL] = GUI_DEFAULT_TRANSPARENT_COLOR;
+	style.color_border[GUI_ELEM_STATE_PRESSED] = GUI_DEFAULT_TRANSPARENT_COLOR;
+	style.color_border[GUI_ELEM_STATE_RELEASED] = GUI_DEFAULT_TRANSPARENT_COLOR;
+	style.color_border[GUI_ELEM_STATE_FOCUSED] = GUI_DEFAULT_TRANSPARENT_COLOR;
+	style.color_border[GUI_ELEM_STATE_SELECTED] = GUI_DEFAULT_TRANSPARENT_COLOR;
+	style.color_border[GUI_ELEM_STATE_DISABLED] = GUI_DEFAULT_TRANSPARENT_COLOR;
+
+	//style.size_min = (p32) { GUI_DEFAULT_BUTTON_WIDTH_MIN * 2 + 1,GUI_DEFAULT_BUTTON_HEIGHT };
+	//style.size_max = (p32) { GUI_DEFAULT_BUTTON_WIDTH_MAX * 2 + 1,GUI_DEFAULT_BUTTON_HEIGHT };
+
+	return style;
+}
+
 GUI_STYLE gui_style_text_input(void)
 {
 	GUI_STYLE style = gui_style_button();
@@ -322,6 +346,7 @@ void gui_style_init(void)
 	gui_style_set(GUI_STYLE_BUTTON_TILE, gui_style_button_tile());
 	gui_style_set(GUI_STYLE_BUTTON_LONG, gui_style_button_long());
 	gui_style_set(GUI_STYLE_BUTTON_KEYBOARD, gui_style_button_keyboard());
+	gui_style_set(GUI_STYLE_TEXT, gui_style_text());
 	gui_style_set(GUI_STYLE_TEXT_INPUT, gui_style_text_input());
 	gui_style_set(GUI_STYLE_TEXT_INPUT_LONG, gui_style_text_input_long());
 	gui_style_set(GUI_STYLE_PROGRESSBAR, gui_style_progressbar());
