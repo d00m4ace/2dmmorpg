@@ -10,7 +10,7 @@ GUI_ELEM* gui_button(const char* txt)
 	elm->elem_type = GUI_ELEM_BUTTON;
 	elm->elem_id = -1;
 
-	elm->size = (p32){ 0,0 };
+	elm->size = (p32) { 0,0 };
 
 	elm->style = GUI_STYLE_BUTTON;
 
@@ -43,6 +43,19 @@ GUI_ELEM* gui_button_size(const char* txt, p32 min_size)
 	GUI_ELEM* elm = gui_button(txt);
 
 	elm->size = p32_max(gui_button_calc_content_size(elm), min_size);
+
+	elm->calc_size = gui_element_calc_size;
+
+	return elm;
+}
+
+GUI_ELEM* gui_button_size_word_wrap(const char* txt, p32 max_size)
+{
+	GUI_ELEM* elm = gui_button(txt);
+
+	elm->flags |= GUI_FLG_WORD_WRAP;
+
+	elm->size = gui_helper_txt_calc_content_size_word_wrap(txt, gui_style_get(elm->style), elm->gui_state, max_size);
 
 	elm->calc_size = gui_element_calc_size;
 
@@ -113,14 +126,27 @@ void gui_button_show(GUI_ELEM* elm, p32 offs)
 
 	if(txt_len)
 	{
-		p32 cs = gui_button_calc_content_size(elm);
-		cs = p32_min(cs, elm->size);
+		p32 cs;
+
+		if(elm->flags & GUI_FLG_WORD_WRAP)
+			cs = elm->size;
+		else
+		{
+			cs = gui_button_calc_content_size(elm);
+			cs = p32_min(cs, elm->size);
+		}
 
 		int32 halgn = gui_style_calc_halign(elm->content_halign, elm->size.x, cs.x);
 		int32 valgn = gui_style_calc_valign(elm->content_valign, elm->size.y, cs.y);
 
 		RD2FONT* fnt = game_font_get(style->font_id[elm->gui_state]);
-		p32 offs = rd2_font_print(fnt, btn->txt, halgn + 2, valgn, 1, 0, gui_color(style->color[elm->gui_state]), FNT_FLG_DRAW);
+
+		uint32 fnt_flgs = FNT_FLG_DRAW;
+
+		if(elm->flags & GUI_FLG_WORD_WRAP)
+			fnt_flgs |= FNT_FLG_WORD_WRAP;
+
+		p32 offs = rd2_font_print(fnt, btn->txt, halgn + 2, valgn, 1, 0, gui_color(style->color[elm->gui_state]), fnt_flgs);
 	}
 
 	rd2_scr_stack_pop_show(p32_add(elm->pos, offs));

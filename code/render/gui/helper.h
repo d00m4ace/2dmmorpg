@@ -35,5 +35,6 @@ aabb32 gui_helper_elems_calc_max_aabb(VPTR* vptr_elems);
 aabb32 gui_helper_clip_aabb32(aabb32 view, aabb32 target);
 
 p32 gui_helper_txt_calc_content_size(const char* txt, GUI_STYLE* style, GUI_ELEM_STATE_ENUM gui_state);
+p32 gui_helper_txt_calc_content_size_word_wrap(const char* txt, GUI_STYLE* style, GUI_ELEM_STATE_ENUM gui_state, p32 max_size);
 
 p32 gui_helper_str_calc_content_size(const char* txt, GUI_STYLE* style, GUI_ELEM_STATE_ENUM gui_state);

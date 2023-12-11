@@ -293,6 +293,26 @@ p32 gui_helper_txt_calc_content_size(const char* txt, GUI_STYLE* style, GUI_ELEM
 	return sz;
 }
 
+p32 gui_helper_txt_calc_content_size_word_wrap(const char* txt, GUI_STYLE* style, GUI_ELEM_STATE_ENUM gui_state, p32 max_size)
+{
+	p32 sz = { 0 };
+
+	if(strlen(txt))
+	{
+		RD2IMG scr_save = *rd2_scr_get();
+
+		rd2_scr_get()->width = max_size.x;
+		rd2_scr_get()->height = max_size.y;
+
+		RD2FONT* fnt = game_font_get(style->font_id[gui_state]);
+		sz = rd2_font_print(fnt, txt, 0, 0, 1, 0, 0, FNT_FLG_WORD_WRAP);
+
+		*rd2_scr_get() = scr_save;
+	}
+
+	return sz;
+}
+
 p32 gui_helper_str_calc_content_size(const char* txt, GUI_STYLE* style, GUI_ELEM_STATE_ENUM gui_state)
 {
 	p32 sz = { 0 };

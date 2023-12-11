@@ -306,6 +306,7 @@ void game_txt_init(void)
 	game_txts = CALLOC(1, GAME_TXT_MAX_COUNT * sizeof(const char*));
 
 	game_txt_set_lang(TXT_LANG_ID_EN);
+	//game_txt_set_lang(TXT_LANG_ID_RU);
 }
 
 const char* game_txt_get(int32 game_txt_id)

@@ -54,3 +54,8 @@ void gui_plane_show(GUI_PLANE* pln);
 void gui_plane_on_input(GUI_PLANE* pln);
 void gui_plane_on_update(GUI_PLANE* pln);
 void gui_plane_on_free(GUI_PLANE* pln);
+
+void gui_layout_tile(GUI_PLANE* pln);
+
+void gui_plane_add_new_line(GUI_PLANE* pln);
+void gui_plane_add_space(GUI_PLANE* pln);

@@ -197,3 +197,18 @@ void gui_plane_on_input(GUI_PLANE* pln)
 void gui_plane_on_free(GUI_PLANE* pln)
 {
 }
+
+void gui_layout_tile(GUI_PLANE* pln)
+{
+	layout_tile_print(&pln->vptr_elems, pln->size.x, -1, (p32) { 1, 1 });
+}
+
+void gui_plane_add_new_line(GUI_PLANE* pln)
+{
+	gui_plane_add_elm(pln, gui_space_new_line());
+}
+
+void gui_plane_add_space(GUI_PLANE* pln)
+{
+	gui_plane_add_elm(pln, gui_space());
+}

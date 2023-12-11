@@ -40,11 +40,11 @@ int main(void)
 	{
 		// Update
 		//----------------------------------------------------------------------------------
-		if(gui_kb_last_key() == KEY_ENTER || hal_gesture_detected(GESTURE_TAP)) game_sound_play(GAME_SOUND_ID_BIPBIP);
-		if(gui_kb_last_key() == KEY_SPACE || hal_gesture_detected(GESTURE_DOUBLETAP)) game_sound_play(GAME_SOUND_ID_BIUBIU);
+		//if(gui_kb_last_key() == KEY_ENTER || hal_gesture_detected(GESTURE_TAP)) game_sound_play(GAME_SOUND_ID_BIPBIP);
+		//if(gui_kb_last_key() == KEY_SPACE || hal_gesture_detected(GESTURE_DOUBLETAP)) game_sound_play(GAME_SOUND_ID_BIUBIU);
 
-		if(gui_kb_last_key() == KEY_PRINT_SCREEN)
-			hal_save_image(*rd2_scr_get(), "screenshot.png");
+		//if(gui_kb_last_key() == KEY_PRINT_SCREEN)
+		//hal_save_image(*rd2_scr_get(), "screenshot.png");
 		//----------------------------------------------------------------------------------
 		rd2_rect_fill(0, 0, 1000, 1000, gui_color(PAL_SILVER));
 		//----------------------------------------------------------------------------------		
