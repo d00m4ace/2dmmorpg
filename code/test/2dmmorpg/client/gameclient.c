@@ -1,5 +1,23 @@
-#include "gamescreens/screenlogin.c"
+//--------------------------------------------------------------------------------------
+void (*GAME_SCREEN_UPDATE)(void);
+void (*GAME_SCREEN_EXIT)(void);
 
+void game_screen_update(void)
+{
+	if(GAME_SCREEN_UPDATE != NULL)
+		GAME_SCREEN_UPDATE();
+}
+
+void game_screen_exit(void)
+{
+	if(GAME_SCREEN_EXIT != NULL)
+		GAME_SCREEN_EXIT();
+
+	GAME_SCREEN_UPDATE = NULL;
+	GAME_SCREEN_EXIT = NULL;
+}
+//--------------------------------------------------------------------------------------
+#include "gamescreens/screenlogin.c"
 //--------------------------------------------------------------------------------------
 int main(void)
 {
@@ -24,37 +42,31 @@ int main(void)
 #endif
 	game_scr_init(SCR_WIDTH_MIN, SCR_HEIGHT_MIN, SCR_W_BORDER_MAX, SCR_H_BORDER_MAX);
 	//--------------------------------------------------------------------------------------
+	GAME_SCREEN_UPDATE = NULL;
+	GAME_SCREEN_EXIT = NULL;
+	//--------------------------------------------------------------------------------------
 	{
 		GUI_DISPLAY* dsp = gui_display(0);
 		gui_add_display(dsp);
 	}
 
-	{
-		screenlogin_init();
-	}
+	//game_txt_set_lang(TXT_LANG_ID_RU);
+
+	screenlogin_enter();
 
 	//--------------------------------------------------------------------------------------
 	// Main game loop
 	//--------------------------------------------------------------------------------------
 	while(!hal_window_is_close())    // Detect window close button or ESC key
 	{
-		// Update
 		//----------------------------------------------------------------------------------
-		//if(gui_kb_last_key() == KEY_ENTER || hal_gesture_detected(GESTURE_TAP)) game_sound_play(GAME_SOUND_ID_BIPBIP);
-		//if(gui_kb_last_key() == KEY_SPACE || hal_gesture_detected(GESTURE_DOUBLETAP)) game_sound_play(GAME_SOUND_ID_BIUBIU);
-
-		//if(gui_kb_last_key() == KEY_PRINT_SCREEN)
-		//hal_save_image(*rd2_scr_get(), "screenshot.png");
+		// GAME UPDATE
 		//----------------------------------------------------------------------------------
-		rd2_rect_fill(0, 0, 1000, 1000, gui_color(PAL_SILVER));
-		//----------------------------------------------------------------------------------		
-
+		game_screen_update();
 		//----------------------------------------------------------------------------------
 		// GUI UPDATE
 		//----------------------------------------------------------------------------------
 		gui_update();
-		//----------------------------------------------------------------------------------
-
 		//----------------------------------------------------------------------------------
 		// GAME SCREEN RENDER
 		//----------------------------------------------------------------------------------
@@ -66,15 +78,11 @@ int main(void)
 				gui_plane_scroll_to(elm->pln, elm->pos);
 		}
 		//----------------------------------------------------------------------------------
-
-		//----------------------------------------------------------------------------------
 		// GUI DRAW
 		//----------------------------------------------------------------------------------
 		gui_draw();
 		//----------------------------------------------------------------------------------
-
-		//----------------------------------------------------------------------------------
-		// Draw
+		// Draw to screen
 		//----------------------------------------------------------------------------------
 		hal_draw_begin();
 

@@ -88,7 +88,7 @@ void game_scr_init(int32 scr_w_min, int32 scr_h_min, int32 scr_w_border_max, int
 	scr_height = hal_window_height();
 
 #ifdef PLATFORM_ANDROID
-	if (scr_height < 1000)
+	if(scr_height < 1000)
 	{
 		SCR_WIDTH_MIN = 320;
 		SCR_HEIGHT_MIN = 180;
@@ -102,25 +102,25 @@ void game_scr_init(int32 scr_w_min, int32 scr_h_min, int32 scr_w_border_max, int
 
 	SCR_W_BORDER = (SCR_WIDTH - SCR_WIDTH_MIN) / 2;
 
-	if (SCR_W_BORDER < 0)
+	if(SCR_W_BORDER < 0)
 		SCR_W_BORDER = 0;
 
-	if (SCR_W_BORDER > SCR_W_BORDER_MAX)
+	if(SCR_W_BORDER > SCR_W_BORDER_MAX)
 		SCR_W_BORDER = SCR_W_BORDER_MAX;
 
 	SCR_WIDTH -= SCR_W_BORDER * 2;
 
 	SCR_H_BORDER = (SCR_HEIGHT - SCR_HEIGHT_MIN) / 2;
 
-	if (SCR_H_BORDER < 0)
+	if(SCR_H_BORDER < 0)
 		SCR_H_BORDER = 0;
 
-	if (SCR_H_BORDER > SCR_H_BORDER_MAX)
+	if(SCR_H_BORDER > SCR_H_BORDER_MAX)
 		SCR_H_BORDER = SCR_H_BORDER_MAX;
 
 	SCR_HEIGHT -= SCR_H_BORDER * 2;
 
-	while (SCR_WIDTH > MAX_SCR_WIDTH)
+	while(SCR_WIDTH > MAX_SCR_WIDTH)
 		MAX_SCR_WIDTH += 128;
 
 	PRINT("MAX_SCR_WIDTH:%d SCR_WIDTH:%d SCR_HEIGHT:%d", MAX_SCR_WIDTH, SCR_WIDTH, SCR_HEIGHT);
@@ -160,7 +160,7 @@ RD2FONT* game_font_get(int32 font_id)
 void game_font_init(void)
 {
 	{
-		for (int i = 0; i < 3; i++)
+		for(int i = 0; i < 3; i++)
 		{
 			RD2FONT* fnt;
 			game_font[i] = rd2_font_init(8, 8);
@@ -262,14 +262,14 @@ bool game_imgs_load(const char* file_name, int32 tile_size, int32 imgs_offset, i
 
 	RD2IMG img_map = hal_load_image(file_name);
 
-	if (img_map.pixels32 == NULL)
+	if(img_map.pixels32 == NULL)
 		return false;
 
 	int32 img_x = 1, img_y = 1;
 
-	for (int32 i = 0; i < tiles_count; i++)
+	for(int32 i = 0; i < tiles_count; i++)
 	{
-		if (i != 0 && (i % 16) == 0)
+		if(i != 0 && (i % 16) == 0)
 		{
 			img_x = 1;
 			img_y += tile_size + 1;
@@ -306,7 +306,6 @@ void game_txt_init(void)
 	game_txts = CALLOC(1, GAME_TXT_MAX_COUNT * sizeof(const char*));
 
 	game_txt_set_lang(TXT_LANG_ID_EN);
-	//game_txt_set_lang(TXT_LANG_ID_RU);
 }
 
 const char* game_txt_get(int32 game_txt_id)
@@ -322,7 +321,7 @@ void game_txt_set_lang(int32 game_txt_lang_id)
 
 	game_lang_id = game_txt_lang_id;
 
-	switch (game_txt_lang_id)
+	switch(game_txt_lang_id)
 	{
 	case TXT_LANG_ID_EN: game_txt_en(game_txts); break;
 	case TXT_LANG_ID_RU: game_txt_ru(game_txts); break;
@@ -348,13 +347,13 @@ void game_sound_set_volume(float volume)
 {
 	game_sound_volume = volume;
 
-	for (int i = 0; i < GAME_SOUND_ID_ENUM_COUNT; i++)
+	for(int i = 0; i < GAME_SOUND_ID_ENUM_COUNT; i++)
 		hal_sound_set_volume(game_sound[i], game_sound_volume);
 }
 
 void game_sound_unload(void)
 {
-	for (int i = 0; i < GAME_SOUND_ID_ENUM_COUNT; i++)
+	for(int i = 0; i < GAME_SOUND_ID_ENUM_COUNT; i++)
 		hal_sound_unload(game_sound[i]);
 }
 
