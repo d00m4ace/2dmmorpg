@@ -204,4 +204,35 @@ void gui_group_on_free(GUI_ELEM* grp)
 
 	gui_element_on_free(grp);
 }
+
+void gui_group_tile(GUI_ELEM* grp)
+{
+	GUI_GROUP* group = grp->data;
+
+	layout_tile_print(&group->vptr_elems, -1, -1, (p32) { 1, 1 });
+}
+
 //--------------------------------------------------------------------------------------
+GUI_ELEM* __gui_group_combo__(GUI_ELEM* elms, ...)
+{
+	GUI_ELEM* grp = gui_group();
+
+	va_list args;
+	va_start(args, elms);
+
+	for(;;)
+	{
+		GUI_ELEM* elm = va_arg(args, GUI_ELEM*);
+
+		if(elm == NULL)
+			break;
+
+		gui_group_add_elm(grp, elm);
+	}
+
+	va_end(args);
+
+	gui_group_tile(grp);
+
+	return grp;
+}

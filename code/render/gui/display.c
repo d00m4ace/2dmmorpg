@@ -12,6 +12,8 @@ GUI_DISPLAY* gui_display(int32 display_id)
 
 	dsp->vptr_planes = vptr_init(16);
 
+	dsp->display_id = display_id;
+
 	return dsp;
 }
 //--------------------------------------------------------------------------------------

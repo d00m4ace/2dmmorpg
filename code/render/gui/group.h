@@ -26,3 +26,8 @@ void gui_group_on_input(GUI_ELEM* grp);
 void gui_group_on_update(GUI_ELEM* grp);
 void gui_group_on_free(GUI_ELEM* grp);
 //--------------------------------------------------------------------------------------
+void gui_group_tile(GUI_ELEM* grp);
+//--------------------------------------------------------------------------------------
+GUI_ELEM* __gui_group_combo__(GUI_ELEM* elms, ...);
+#define gui_group_combo(...) __gui_group_combo__(NULL, __VA_ARGS__, NULL)
+//--------------------------------------------------------------------------------------

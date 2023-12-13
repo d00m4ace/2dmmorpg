@@ -80,6 +80,9 @@ void layout_tile_print(VPTR* vptr_elems, int32 max_width, int32 max_tiles_per_li
 
 		elm->origin = pos;
 
+		if(elm->flags & GUI_FLG_HIDDEN)
+			continue;
+
 		while(1)
 		{
 			if((max_tiles_per_line != -1 && tiles_count == max_tiles_per_line) ||

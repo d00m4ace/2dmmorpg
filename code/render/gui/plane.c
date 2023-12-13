@@ -70,6 +70,10 @@ void gui_plane_calc_size(GUI_PLANE* pln)
 	for(int32 i = 0; i < pln->vptr_elems.count; i++)
 	{
 		GUI_ELEM* elm = vptr_elm(&pln->vptr_elems, i);
+
+		if(elm->flags & GUI_FLG_HIDDEN)
+			continue;
+
 		elm->calc_size(elm);
 	}
 }
@@ -84,6 +88,10 @@ void gui_plane_calc_pos(GUI_PLANE* pln)
 	for(int32 i = 0; i < pln->vptr_elems.count; i++)
 	{
 		GUI_ELEM* elm = vptr_elm(&pln->vptr_elems, i);
+
+		if(elm->flags & GUI_FLG_HIDDEN)
+			continue;
+
 		elm->calc_pos(elm, offs);
 		pln->max_aabb = aabb32_add(pln->max_aabb, aabb32_from_ps(elm->pos, elm->size));
 	}
@@ -132,6 +140,9 @@ void gui_plane_show(GUI_PLANE* pln)
 	{
 		GUI_ELEM* elm = vptr_elm(&pln->vptr_elems, i);
 
+		if(elm->flags & GUI_FLG_HIDDEN)
+			continue;
+
 		if(!aabb32_to_aabb32(pnl_aabb, aabb32_from_ps(elm->pos, elm->size)))
 			continue;
 
@@ -147,6 +158,10 @@ void gui_plane_on_update(GUI_PLANE* pln)
 	for(int32 i = 0; i < pln->vptr_elems.count; i++)
 	{
 		GUI_ELEM* elm = vptr_elm(&pln->vptr_elems, i);
+
+		if(elm->flags & GUI_FLG_HIDDEN)
+			continue;
+
 		elm->on_update(elm);
 	}
 }
@@ -182,6 +197,9 @@ void gui_plane_on_input(GUI_PLANE* pln)
 	for(int32 i = 0; i < pln->vptr_elems.count; i++)
 	{
 		GUI_ELEM* elm = vptr_elm(&pln->vptr_elems, i);
+
+		if(elm->flags & GUI_FLG_HIDDEN)
+			continue;
 
 		if(!aabb32_to_aabb32(pnl_aabb, aabb32_from_ps(elm->pos, elm->size)))
 			continue;
