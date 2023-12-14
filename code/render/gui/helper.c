@@ -56,7 +56,7 @@ void gui_helper_elems_rest_origin(VPTR* vptr_elems)
 	for(int32 i = 0; i < vptr_elems->count; i++)
 	{
 		GUI_ELEM* elm = vptr_elm(vptr_elems, i);
-		elm->origin = (p32){ 0 };
+		elm->origin = (p32) { 0 };
 	}
 }
 
@@ -115,7 +115,7 @@ void gui_helper_elems_rest_pos(VPTR* vptr_elems)
 	for(int32 i = 0; i < vptr_elems->count; i++)
 	{
 		GUI_ELEM* elm = vptr_elm(vptr_elems, i);
-		elm->pos = (p32){ 0 };
+		elm->pos = (p32) { 0 };
 	}
 }
 
@@ -311,6 +311,8 @@ p32 gui_helper_txt_calc_content_size_word_wrap(const char* txt, GUI_STYLE* style
 		sz = rd2_font_print(fnt, txt, 0, 0, 1, 0, 0, FNT_FLG_WORD_WRAP);
 
 		*rd2_scr_get() = scr_save;
+
+		sz.x = min(max_size.x, sz.x + 2);
 
 		if(max_size.y != -1)
 			sz.y = max_size.y;

@@ -9,13 +9,27 @@ void game_txt_en(const char* txt[])
 
 	txt[TXT_ID_ENTER] = "Enter";
 
-	txt[TXT_ID_USER_NAME] = "USER NAME";
-	txt[TXT_ID_PASSWORD] = "PASSWORD";
-
 	txt[TXT_ID_LOGIN] = "Login";
 	txt[TXT_ID_REGISTER] = "Register";
 
+	txt[TXT_ID_LOG_IN] = "LOG IN";
+	txt[TXT_ID_SIGN_UP] = "SIGN UP";
+
+	txt[TXT_ID_USER_NAME] = "USER NAME";
+	txt[TXT_ID_PASSWORD] = "PASSWORD";
+
+	txt[TXT_ID_PASSWORD] = "PASSWORD";
+
+	txt[TXT_ID_PASSWORD_AGAIN] = "PASSWORD AGAIN";
+	txt[TXT_ID_EMAIL] = "EMAIL ADDRESS";
+
+	txt[TXT_ID_INCORRECT_EMAIL] = "Incorrect EMAIL address. Please check the EMAIL address you entered and try again.";
+
+	txt[TXT_ID_USERNAME_TAKEN] = "The USER NAME you entered is already taken. Please try another USER NAME.";
+	
 	txt[TXT_ID_USER_NAME_RULES] = "The USER NAME must begin with a uppercase (A - Z) letter.\nThe USER NAME can contain lowercase (a - z) letters or digits (0 - 9).\nThe total length of the USER NAME must be a minimum of 3 characters and not exceed 10 characters.";
+
+	txt[TXT_ID_NO_USER_OR_PASSWORD] = "No account found with the provided USER NAME and PASSWORD. Please re-enter your credentials or register for an account.";
 
 };
 

@@ -4,15 +4,25 @@ typedef struct SCREENLOGIN_STATE
 	GUI_PLANE* pln;
 
 	GUI_ELEM* elm_USER_NAME_RULES;
+	GUI_ELEM* elm_NO_USER_OR_PASSWORD;
+	GUI_ELEM* elm_INCORRECT_EMAIL;
+	GUI_ELEM* elm_USERNAME_TAKEN;
+
+	GUI_ELEM* elm_LOG_IN;
+	GUI_ELEM* elm_SIGN_UP;
 
 	GUI_ELEM* elm_INPUT_USER_NAME;
 	GUI_ELEM* elm_INPUT_PASSWORD;
+	GUI_ELEM* elm_INPUT_PASSWORD_AGAIN;
+	GUI_ELEM* elm_INPUT_EMAIL;
 
 	GUI_ELEM* elm_BUTTON_LOGIN;
 	GUI_ELEM* elm_BUTTON_REGISTER;
 
 	GUI_ELEM* elm_grp_LOGIN;
 	GUI_ELEM* elm_grp_PASSWORD;
+	GUI_ELEM* elm_grp_PASSWORD_AGAIN;
+	GUI_ELEM* elm_grp_EMAIL;
 
 	bool is_init;
 } SCREENLOGIN_STATE;
@@ -38,8 +48,24 @@ void screenlogin_init(void)
 			state->pln->flags |= GUI_FLG_INPUTLOCK | GUI_FLG_SHADOWSCREEN;
 		}
 
-		gui_plane_add_elm(state->pln, state->elm_USER_NAME_RULES = gui_text_word_wrap(txt_str_cat("#18@", game_txt_get(TXT_ID_USER_NAME_RULES)), (p32) { GAME_GUI_WIDTH, -1 }));
+		gui_plane_add_elm(state->pln, state->elm_USER_NAME_RULES = gui_text_small_word_wrap(txt_str_cat("#18@", game_txt_get(TXT_ID_USER_NAME_RULES)), (p32) { GAME_GUI_WIDTH, -1 }));
 		gui_plane_add_new_line(state->pln);
+
+		gui_plane_add_elm(state->pln, state->elm_NO_USER_OR_PASSWORD = gui_text_small_word_wrap(txt_str_cat("#18@", game_txt_get(TXT_ID_NO_USER_OR_PASSWORD)), (p32) { GAME_GUI_WIDTH, -1 }));
+		gui_plane_add_new_line(state->pln);
+
+		gui_plane_add_elm(state->pln, state->elm_INCORRECT_EMAIL = gui_text_small_word_wrap(txt_str_cat("#18@", game_txt_get(TXT_ID_INCORRECT_EMAIL)), (p32) { GAME_GUI_WIDTH, -1 }));
+		gui_plane_add_new_line(state->pln);
+
+		gui_plane_add_elm(state->pln, state->elm_USERNAME_TAKEN = gui_text_small_word_wrap(txt_str_cat("#18@", game_txt_get(TXT_ID_USERNAME_TAKEN)), (p32) { GAME_GUI_WIDTH, -1 }));
+		gui_plane_add_new_line(state->pln);
+
+		gui_plane_add_elm(state->pln, state->elm_LOG_IN = gui_text(game_txt_get(TXT_ID_LOG_IN)));
+		gui_plane_add_new_line(state->pln);
+
+		gui_plane_add_elm(state->pln, state->elm_SIGN_UP = gui_text(game_txt_get(TXT_ID_SIGN_UP)));
+		gui_plane_add_new_line(state->pln);
+
 
 		{
 			gui_plane_add_elm(state->pln, state->elm_grp_LOGIN = gui_group_combo(
@@ -56,6 +82,24 @@ void screenlogin_init(void)
 			));
 		}
 		gui_plane_add_new_line(state->pln);
+
+		{
+			gui_plane_add_elm(state->pln, state->elm_grp_PASSWORD_AGAIN = gui_group_combo(
+				gui_text(txt_str_cat(game_txt_get(TXT_ID_PASSWORD_AGAIN), ":")),
+				state->elm_INPUT_PASSWORD_AGAIN = gui_text_input("")
+			));
+		}
+		gui_plane_add_new_line(state->pln);
+
+		{
+			gui_plane_add_elm(state->pln, state->elm_grp_EMAIL = gui_group_combo(
+				gui_text(txt_str_cat(game_txt_get(TXT_ID_EMAIL), ":")),
+				state->elm_INPUT_EMAIL = gui_text_input("")
+			));
+		}
+		gui_plane_add_new_line(state->pln);
+
+
 
 		gui_plane_add_elm(state->pln, state->elm_BUTTON_LOGIN = gui_button(game_txt_get(TXT_ID_LOGIN)));
 		gui_plane_add_elm(state->pln, state->elm_BUTTON_REGISTER = gui_button(game_txt_get(TXT_ID_REGISTER)));

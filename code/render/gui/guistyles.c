@@ -47,8 +47,8 @@ p32 gui_style_size_max(GUI_STYLE_ENUM style_id)
 //#define GUI_DEFAULT_GAME_FONT_ID GAME_FONT_ID_ZX_RUS_THIN_BORDER
 //#define GUI_DEFAULT_GAME_FONT_ID GAME_FONT_ID_ZX_RUS_THIN
 //#define GUI_DEFAULT_GAME_FONT_ID GAME_FONT_ID_ZX_RUS
-#define GUI_DEFAULT_GAME_FONT_ID GAME_FONT_ID_BOLD_RUS
-//#define GUI_DEFAULT_GAME_FONT_ID GAME_FONT_ID_DOS_RUS
+//#define GUI_DEFAULT_GAME_FONT_ID GAME_FONT_ID_BOLD_RUS
+#define GUI_DEFAULT_GAME_FONT_ID GAME_FONT_ID_DOS_RUS
 //#define GUI_DEFAULT_GAME_FONT_ID GAME_FONT_ID_ZX_RUS_BORDER
 //#define GUI_DEFAULT_GAME_FONT_ID GAME_FONT_ID_BOLD_RUS_BORDER
 //#define GUI_DEFAULT_GAME_FONT_ID GAME_FONT_ID_DOS_RUS_BORDER
@@ -115,8 +115,8 @@ GUI_STYLE gui_style_button_tile(void)
 {
 	GUI_STYLE style = gui_style_button();
 
-	style.size_min = (p32){ GUI_DEFAULT_BUTTON_WIDTH_MIN + 1,GUI_DEFAULT_BUTTON_WIDTH_MIN + 1 };
-	style.size_max = (p32){ GUI_DEFAULT_BUTTON_WIDTH_MAX + 1,GUI_DEFAULT_BUTTON_WIDTH_MAX + 1 };
+	style.size_min = (p32) { GUI_DEFAULT_BUTTON_WIDTH_MIN + 1,GUI_DEFAULT_BUTTON_WIDTH_MIN + 1 };
+	style.size_max = (p32) { GUI_DEFAULT_BUTTON_WIDTH_MAX + 1,GUI_DEFAULT_BUTTON_WIDTH_MAX + 1 };
 
 	return style;
 }
@@ -125,8 +125,8 @@ GUI_STYLE gui_style_button_long(void)
 {
 	GUI_STYLE style = gui_style_button();
 
-	style.size_min = (p32){ GUI_DEFAULT_BUTTON_WIDTH_MIN * 2 + 1,GUI_DEFAULT_BUTTON_HEIGHT };
-	style.size_max = (p32){ GUI_DEFAULT_BUTTON_WIDTH_MAX * 2 + 1,GUI_DEFAULT_BUTTON_HEIGHT };
+	style.size_min = (p32) { GUI_DEFAULT_BUTTON_WIDTH_MIN * 2 + 1,GUI_DEFAULT_BUTTON_HEIGHT };
+	style.size_max = (p32) { GUI_DEFAULT_BUTTON_WIDTH_MAX * 2 + 1,GUI_DEFAULT_BUTTON_HEIGHT };
 
 	return style;
 }
@@ -135,8 +135,8 @@ GUI_STYLE gui_style_button_keyboard(void)
 {
 	GUI_STYLE style = gui_style_button();
 
-	style.size_min = (p32){ 31,30 };
-	style.size_max = (p32){ 31,30 };
+	style.size_min = (p32) { 31,30 };
+	style.size_max = (p32) { 31,30 };
 
 	//style.background = GUI_BACKGROUND_BOX;
 	//style.background = GUI_BACKGROUND_TILE;
@@ -166,6 +166,54 @@ GUI_STYLE gui_style_text(void)
 	//style.size_min = (p32) { GUI_DEFAULT_BUTTON_WIDTH_MIN * 2 + 1,GUI_DEFAULT_BUTTON_HEIGHT };
 	//style.size_max = (p32) { GUI_DEFAULT_BUTTON_WIDTH_MAX * 2 + 1,GUI_DEFAULT_BUTTON_HEIGHT };
 
+	//style.size_min = (p32) { -1,-1 };
+	//style.size_max = (p32) { -1,-1 };
+
+	style.size_min = (p32) { -1,GUI_DEFAULT_BUTTON_HEIGHT };
+	style.size_max = (p32) { -1,GUI_DEFAULT_BUTTON_HEIGHT };
+
+	return style;
+}
+
+GUI_STYLE gui_style_text_border(void)
+{
+	GUI_STYLE style = gui_style_text();
+
+	style.font_id[GUI_ELEM_STATE_NORMAL] = GAME_FONT_ID_DOS_RUS_BORDER;
+	style.font_id[GUI_ELEM_STATE_PRESSED] = GAME_FONT_ID_DOS_RUS_BORDER;
+	style.font_id[GUI_ELEM_STATE_RELEASED] = GAME_FONT_ID_DOS_RUS_BORDER;
+	style.font_id[GUI_ELEM_STATE_FOCUSED] = GAME_FONT_ID_DOS_RUS_BORDER;
+	style.font_id[GUI_ELEM_STATE_SELECTED] = GAME_FONT_ID_DOS_RUS_BORDER;
+	style.font_id[GUI_ELEM_STATE_DISABLED] = GAME_FONT_ID_DOS_RUS_BORDER;
+
+	return style;
+}
+
+GUI_STYLE gui_style_text_small(void)
+{
+	GUI_STYLE style = gui_style_text();
+
+	style.font_id[GUI_ELEM_STATE_NORMAL] = GAME_FONT_ID_ZX_RUS_THIN;
+	style.font_id[GUI_ELEM_STATE_PRESSED] = GAME_FONT_ID_ZX_RUS_THIN;
+	style.font_id[GUI_ELEM_STATE_RELEASED] = GAME_FONT_ID_ZX_RUS_THIN;
+	style.font_id[GUI_ELEM_STATE_FOCUSED] = GAME_FONT_ID_ZX_RUS_THIN;
+	style.font_id[GUI_ELEM_STATE_SELECTED] = GAME_FONT_ID_ZX_RUS_THIN;
+	style.font_id[GUI_ELEM_STATE_DISABLED] = GAME_FONT_ID_ZX_RUS_THIN;
+
+	return style;
+}
+
+GUI_STYLE gui_style_text_small_border(void)
+{
+	GUI_STYLE style = gui_style_text();
+
+	style.font_id[GUI_ELEM_STATE_NORMAL] = GAME_FONT_ID_ZX_RUS_THIN_BORDER;
+	style.font_id[GUI_ELEM_STATE_PRESSED] = GAME_FONT_ID_ZX_RUS_THIN_BORDER;
+	style.font_id[GUI_ELEM_STATE_RELEASED] = GAME_FONT_ID_ZX_RUS_THIN_BORDER;
+	style.font_id[GUI_ELEM_STATE_FOCUSED] = GAME_FONT_ID_ZX_RUS_THIN_BORDER;
+	style.font_id[GUI_ELEM_STATE_SELECTED] = GAME_FONT_ID_ZX_RUS_THIN_BORDER;
+	style.font_id[GUI_ELEM_STATE_DISABLED] = GAME_FONT_ID_ZX_RUS_THIN_BORDER;
+
 	return style;
 }
 
@@ -183,8 +231,8 @@ GUI_STYLE gui_style_text_input(void)
 	style.color_border[GUI_ELEM_STATE_PRESSED] = PAL_GREEN;
 	style.color_border[GUI_ELEM_STATE_FOCUSED] = PAL_GREEN;
 
-	style.size_min = (p32){ GUI_DEFAULT_BUTTON_WIDTH_MIN * 2 + 1,GUI_DEFAULT_BUTTON_HEIGHT };
-	style.size_max = (p32){ GUI_DEFAULT_BUTTON_WIDTH_MAX * 2 + 1,GUI_DEFAULT_BUTTON_HEIGHT };
+	style.size_min = (p32) { GUI_DEFAULT_BUTTON_WIDTH_MIN * 2 + 1,GUI_DEFAULT_BUTTON_HEIGHT };
+	style.size_max = (p32) { GUI_DEFAULT_BUTTON_WIDTH_MAX * 2 + 1,GUI_DEFAULT_BUTTON_HEIGHT };
 
 	return style;
 }
@@ -193,8 +241,8 @@ GUI_STYLE gui_style_text_input_long(void)
 {
 	GUI_STYLE style = gui_style_text_input();
 
-	style.size_min = (p32){ GUI_DEFAULT_BUTTON_WIDTH_MIN * 4 + 1,GUI_DEFAULT_BUTTON_HEIGHT };
-	style.size_max = (p32){ GUI_DEFAULT_BUTTON_WIDTH_MAX * 4 + 1,GUI_DEFAULT_BUTTON_HEIGHT };
+	style.size_min = (p32) { GUI_DEFAULT_BUTTON_WIDTH_MIN * 4 + 1,GUI_DEFAULT_BUTTON_HEIGHT };
+	style.size_max = (p32) { GUI_DEFAULT_BUTTON_WIDTH_MAX * 4 + 1,GUI_DEFAULT_BUTTON_HEIGHT };
 
 	return style;
 }
@@ -205,8 +253,8 @@ GUI_STYLE gui_style_progressbar(void)
 {
 	GUI_STYLE style = gui_style_button();
 
-	style.size_min = (p32){ 100 + 2,16 };
-	style.size_max = (p32){ 100 + 2,16 };
+	style.size_min = (p32) { 100 + 2,16 };
+	style.size_max = (p32) { 100 + 2,16 };
 
 	style.color_background[GUI_ELEM_STATE_PRESSED] = style.color_background[GUI_ELEM_STATE_NORMAL];
 	style.color_border[GUI_ELEM_STATE_PRESSED] = style.color_border[GUI_ELEM_STATE_NORMAL];
@@ -223,8 +271,8 @@ GUI_STYLE gui_style_spinner(void)
 {
 	GUI_STYLE style = gui_style_progressbar();
 
-	style.size_min = (p32){ 100 - 16 * 2,16 };
-	style.size_max = (p32){ 100 - 16 * 2,16 };
+	style.size_min = (p32) { 100 - 16 * 2,16 };
+	style.size_max = (p32) { 100 - 16 * 2,16 };
 
 	style.background = GUI_BACKGROUND_TILE;
 
@@ -235,8 +283,8 @@ GUI_STYLE gui_style_spinner_button(void)
 {
 	GUI_STYLE style = gui_style_button();
 
-	style.size_min = (p32){ 16,16 };
-	style.size_max = (p32){ 16,16 };
+	style.size_min = (p32) { 16,16 };
+	style.size_max = (p32) { 16,16 };
 
 	style.background = GUI_BACKGROUND_TILE;
 
@@ -262,8 +310,8 @@ GUI_STYLE gui_style_plane(void)
 	style.color_border[GUI_ELEM_STATE_SELECTED] = PAL_STEELBLUE;
 	style.color_border[GUI_ELEM_STATE_DISABLED] = PAL_STEELBLUE;
 
-	style.size_min = (p32){ -1,-1 };
-	style.size_max = (p32){ -1,-1 };
+	style.size_min = (p32) { -1,-1 };
+	style.size_max = (p32) { -1,-1 };
 
 	style.background = GUI_BACKGROUND_BOX;
 
@@ -281,8 +329,8 @@ GUI_STYLE gui_style_empty(void)
 	style.font_id[GUI_ELEM_STATE_SELECTED] = GUI_DEFAULT_GAME_FONT_ID;
 	style.font_id[GUI_ELEM_STATE_DISABLED] = GUI_DEFAULT_GAME_FONT_ID;
 
-	style.size_min = (p32){ -1,-1 };
-	style.size_max = (p32){ -1,-1 };
+	style.size_min = (p32) { -1,-1 };
+	style.size_max = (p32) { -1,-1 };
 
 	style.color[GUI_ELEM_STATE_NORMAL] = GUI_DEFAULT_COLOR;
 	style.color[GUI_ELEM_STATE_PRESSED] = GUI_DEFAULT_COLOR;
@@ -342,19 +390,28 @@ GUI_STYLE gui_style_empty_small(void)
 void gui_style_init(void)
 {
 	gui_style_set(GUI_STYLE_NONE, gui_style_empty());
+
 	gui_style_set(GUI_STYLE_BUTTON, gui_style_button());
 	gui_style_set(GUI_STYLE_BUTTON_TILE, gui_style_button_tile());
 	gui_style_set(GUI_STYLE_BUTTON_LONG, gui_style_button_long());
 	gui_style_set(GUI_STYLE_BUTTON_KEYBOARD, gui_style_button_keyboard());
+	
 	gui_style_set(GUI_STYLE_TEXT, gui_style_text());
+	gui_style_set(GUI_STYLE_TEXT_BORDER, gui_style_text_border());
+	gui_style_set(GUI_STYLE_TEXT_SMALL, gui_style_text_small());
+	gui_style_set(GUI_STYLE_TEXT_SMALL_BORDER, gui_style_text_small_border());
+
 	gui_style_set(GUI_STYLE_TEXT_INPUT, gui_style_text_input());
 	gui_style_set(GUI_STYLE_TEXT_INPUT_LONG, gui_style_text_input_long());
+
 	gui_style_set(GUI_STYLE_PROGRESSBAR, gui_style_progressbar());
 	gui_style_set(GUI_STYLE_SPINNER, gui_style_spinner());
 	gui_style_set(GUI_STYLE_SPINNER_BUTTON, gui_style_spinner_button());
+
 	gui_style_set(GUI_STYLE_EMPTY, gui_style_empty());
 	gui_style_set(GUI_STYLE_EMPTY_TEXT_THIN, gui_style_empty_thin());
 	gui_style_set(GUI_STYLE_EMPTY_TEXT_SMALL, gui_style_empty_small());
+
 	gui_style_set(GUI_STYLE_PLANE, gui_style_plane());
 }
 //--------------------------------------------------------------------------------------
