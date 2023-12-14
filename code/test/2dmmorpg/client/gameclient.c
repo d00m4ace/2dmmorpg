@@ -1,6 +1,5 @@
 //--------------------------------------------------------------------------------------
-#define GAME_GUI_WIDTH 400
-#define GAME_GUI_HEIGHT 200
+
 //--------------------------------------------------------------------------------------
 void (*GAME_SCREEN_UPDATE)(void);
 void (*GAME_SCREEN_EXIT)(void);
@@ -30,20 +29,8 @@ int main(void)
 	hal_system_init();
 	game_init();
 	//--------------------------------------------------------------------------------------
-	// low end android 1280x720
-	//static int SCR_WIDTH_MIN = 320;
-	//static int SCR_HEIGHT_MIN = 180;
-	// hi end android 1080+
-	static int SCR_WIDTH_MIN = 422;
-	static int SCR_HEIGHT_MIN = 216;
-	//--------------------------------------------------------------------------------------
-	static int SCR_W_BORDER_MAX = 5;
-	static int SCR_H_BORDER_MAX = 0;
-#ifdef _WIN32	
-	SCR_W_BORDER_MAX = 6;
-	SCR_H_BORDER_MAX = 6;
-#endif
-	game_scr_init(SCR_WIDTH_MIN, SCR_HEIGHT_MIN, SCR_W_BORDER_MAX, SCR_H_BORDER_MAX);
+	// GAME SCREEN INIT
+	game_scr_init(GAME_SCR_WIDTH_MIN, GAME_SCR_HEIGHT_MIN, GAME_SCR_WIDTH_BORDER, GAME_SCR_HEIGHT_BORDER);
 	//--------------------------------------------------------------------------------------
 	GAME_SCREEN_UPDATE = NULL;
 	GAME_SCREEN_EXIT = NULL;

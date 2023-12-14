@@ -19,6 +19,19 @@
 #define USE_FIXPT_OVERFLOW_TYPE int64
 
 ////////////////////////////////
+// low end android 1280x720
+//#define GAME_SCR_WIDTH_MIN 320
+//#define GAME_SCR_HEIGHT_MIN 180
+// hi end android 1080+
+#define GAME_SCR_WIDTH_MIN 422
+#define GAME_SCR_HEIGHT_MIN 216
+////////////////////////////////
+#define GAME_SCR_WIDTH_BORDER 6
+#define GAME_SCR_HEIGHT_BORDER 6
+////////////////////////////////
+#define GAME_GUI_WIDTH 400
+#define GAME_GUI_HEIGHT 200
+////////////////////////////////
 
 #if 0
 #undef PRINT

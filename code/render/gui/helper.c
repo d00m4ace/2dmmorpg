@@ -304,15 +304,23 @@ p32 gui_helper_txt_calc_content_size_word_wrap(const char* txt, GUI_STYLE* style
 		rd2_scr_get()->width = max_size.x;
 		rd2_scr_get()->height = max_size.y;
 
+		if(max_size.x == -1)
+			rd2_scr_get()->width = GAME_GUI_WIDTH;
+
 		if(max_size.y == -1)
-			rd2_scr_get()->height = scr_save.height;
+			rd2_scr_get()->height = GAME_GUI_HEIGHT;
 
 		RD2FONT* fnt = game_font_get(style->font_id[gui_state]);
 		sz = rd2_font_print(fnt, txt, 0, 0, 1, 0, 0, FNT_FLG_WORD_WRAP);
 
 		*rd2_scr_get() = scr_save;
 
-		sz.x = min(max_size.x, sz.x + 2);
+		sz.x += 2;
+
+		if(max_size.x != -1)
+			sz.x = min(max_size.x, sz.x);
+		else
+			sz.x = min(GAME_GUI_WIDTH, sz.x);
 
 		if(max_size.y != -1)
 			sz.y = max_size.y;
