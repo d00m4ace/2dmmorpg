@@ -7,6 +7,7 @@ typedef struct SCREENLOGIN_STATE
 	GUI_ELEM* elm_NO_USER_OR_PASSWORD;
 	GUI_ELEM* elm_INCORRECT_EMAIL;
 	GUI_ELEM* elm_USERNAME_TAKEN;
+	GUI_ELEM* elm_PASSWORD_RULES;
 
 	GUI_ELEM* elm_LOG_IN;
 	GUI_ELEM* elm_SIGN_UP;
@@ -60,6 +61,8 @@ void screenlogin_init(void)
 		gui_plane_add_elm(state->pln, state->elm_USERNAME_TAKEN = gui_text_word_wrap(txt_str_cat("#18@", game_txt_get(TXT_ID_USERNAME_TAKEN))));
 		gui_plane_add_new_line(state->pln);
 
+		gui_plane_add_elm(state->pln, state->elm_PASSWORD_RULES = gui_text_word_wrap(txt_str_cat("#18@", game_txt_get(TXT_ID_PASSWORD_RULES))));
+		gui_plane_add_new_line(state->pln);
 
 		gui_plane_add_elm(state->pln, state->elm_LOG_IN = gui_text(game_txt_get(TXT_ID_LOG_IN)));
 		gui_plane_add_new_line(state->pln);
@@ -128,7 +131,59 @@ void screenlogin_update(void)
 			state->elm_USER_NAME_RULES->flags ^= GUI_FLG_HIDDEN | GUI_FLG_DISABLED;
 			gui_layout_tile(state->pln);
 		}
+
+        if(gui_kb_last_key() == KEY_F)
+		{
+			SCREENLOGIN_STATE* state = &screenlogin_state;
+			state->elm_NO_USER_OR_PASSWORD->flags ^= GUI_FLG_HIDDEN | GUI_FLG_DISABLED;
+			gui_layout_tile(state->pln);
+		}
+		if(gui_kb_last_key() == KEY_G)
+		{
+			SCREENLOGIN_STATE* state = &screenlogin_state;
+			state->elm_INCORRECT_EMAIL->flags ^= GUI_FLG_HIDDEN | GUI_FLG_DISABLED;
+			gui_layout_tile(state->pln);
+		}
+		if(gui_kb_last_key() == KEY_H)
+		{
+			SCREENLOGIN_STATE* state = &screenlogin_state;
+			state->elm_USERNAME_TAKEN->flags ^= GUI_FLG_HIDDEN | GUI_FLG_DISABLED;
+			gui_layout_tile(state->pln);
+		}
+		if(gui_kb_last_key() == KEY_J)
+		{
+			SCREENLOGIN_STATE* state = &screenlogin_state;
+			state->elm_PASSWORD_RULES->flags ^= GUI_FLG_HIDDEN | GUI_FLG_DISABLED;
+			gui_layout_tile(state->pln);
+		}
+		if(gui_kb_last_key() == KEY_K)
+		{
+			SCREENLOGIN_STATE* state = &screenlogin_state;
+			state->elm_LOG_IN->flags ^= GUI_FLG_HIDDEN | GUI_FLG_DISABLED;
+			gui_layout_tile(state->pln);
+		}
+		if(gui_kb_last_key() == KEY_L)
+		{
+			SCREENLOGIN_STATE* state = &screenlogin_state;
+			state->elm_SIGN_UP->flags ^= GUI_FLG_HIDDEN | GUI_FLG_DISABLED;
+			gui_layout_tile(state->pln);
+		}
 	}
+}
+
+//password rules check without isalnum() function
+bool screenlogin_is_valid_password(const char* password)
+{
+	if(strlen(password) < 3 || strlen(password) > 20)
+		return false;
+
+	for(int i = 0; i < strlen(password); i++)
+	{
+		if(!((password[i] >= 'a' && password[i] <= 'z') || (password[i] >= 'A' && password[i] <= 'Z') || (password[i] >= '0' && password[i] <= '9')))
+			return false;
+	}
+
+	return true;
 }
 
 void screenlogin_exit(void)

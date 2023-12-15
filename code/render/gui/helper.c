@@ -293,6 +293,16 @@ p32 gui_helper_txt_calc_content_size(const char* txt, GUI_STYLE* style, GUI_ELEM
 	return sz;
 }
 
+//explain
+//this function calculates the size of a text element
+//txt is the text
+//style is the style of the text
+//gui_state is the state of the text
+//max_size is the maximum size of the text
+//if max_size.x is -1, the width of the text is not limited
+//if max_size.y is -1, the height of the text is not limited
+//if max_size.x is not -1, the width of the text is limited to max_size.x
+//if max_size.y is not -1, the height of the text is limited to max_size.y
 p32 gui_helper_txt_calc_content_size_word_wrap(const char* txt, GUI_STYLE* style, GUI_ELEM_STATE_ENUM gui_state, p32 max_size)
 {
 	p32 sz = { 0 };

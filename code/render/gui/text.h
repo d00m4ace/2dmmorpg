@@ -10,6 +10,14 @@ typedef enum GUI_TEXT_STYLE_ENUM
 	GUI_TEXT_STYLE_ENUM_COUNT,
 } GUI_TEXT_STYLE_ENUM;
 
+//doc
+//this function creates a text element
+//txt_style is optional, if you don't want to set a style, set txt_style to GUI_TEXT_STYLE_NORMAL
+//txt_style can be one of the following:
+//GUI_TEXT_STYLE_NORMAL
+//GUI_TEXT_STYLE_SMALL
+//GUI_TEXT_STYLE_NORMAL_BORDER
+//GUI_TEXT_STYLE_SMALL_BORDER
 GUI_ELEM* gui_text_(const char* txt, GUI_TEXT_STYLE_ENUM txt_style);
 
 //max_width and max_height are optional, if you want to limit the size of the text
