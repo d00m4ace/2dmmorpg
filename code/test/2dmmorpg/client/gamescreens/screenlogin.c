@@ -8,6 +8,7 @@ typedef struct SCREENLOGIN_STATE
 	GUI_ELEM* elm_INCORRECT_EMAIL;
 	GUI_ELEM* elm_USERNAME_TAKEN;
 	GUI_ELEM* elm_PASSWORD_RULES;
+	GUI_ELEM* elm_EMAIL_RULES;
 
 	GUI_ELEM* elm_LOG_IN;
 	GUI_ELEM* elm_SIGN_UP;
@@ -29,6 +30,10 @@ typedef struct SCREENLOGIN_STATE
 } SCREENLOGIN_STATE;
 
 static SCREENLOGIN_STATE screenlogin_state = { 0 };
+
+void screenlogin_init(void);
+void screenlogin_update(void);
+void screenlogin_exit(void);
 
 void screenlogin_init(void)
 {
@@ -64,6 +69,10 @@ void screenlogin_init(void)
 		gui_plane_add_elm(state->pln, state->elm_PASSWORD_RULES = gui_text_word_wrap(txt_str_cat("#18@", game_txt_get(TXT_ID_PASSWORD_RULES))));
 		gui_plane_add_new_line(state->pln);
 
+		gui_plane_add_elm(state->pln, state->elm_EMAIL_RULES = gui_text_word_wrap(txt_str_cat("#18@", game_txt_get(TXT_ID_EMAIL_RULES))));
+		gui_plane_add_new_line(state->pln);
+
+
 		gui_plane_add_elm(state->pln, state->elm_LOG_IN = gui_text(game_txt_get(TXT_ID_LOG_IN)));
 		gui_plane_add_new_line(state->pln);
 
@@ -79,13 +88,13 @@ void screenlogin_init(void)
 
 		gui_plane_add_elm(state->pln, state->elm_grp_PASSWORD = gui_group_combo(
 			gui_text(txt_str_cat(game_txt_get(TXT_ID_PASSWORD), ":")),
-			state->elm_INPUT_PASSWORD = gui_text_input("")
+			state->elm_INPUT_PASSWORD = gui_text_input_password("")
 		));
 		gui_plane_add_new_line(state->pln);
 
 		gui_plane_add_elm(state->pln, state->elm_grp_PASSWORD_AGAIN = gui_group_combo(
 			gui_text(txt_str_cat(game_txt_get(TXT_ID_PASSWORD_AGAIN), ":")),
-			state->elm_INPUT_PASSWORD_AGAIN = gui_text_input("")
+			state->elm_INPUT_PASSWORD_AGAIN = gui_text_input_password("")
 		));
 		gui_plane_add_new_line(state->pln);
 
@@ -103,6 +112,86 @@ void screenlogin_init(void)
 	}
 }
 
+void screenlogin_hide_all_messages(void)
+{
+	SCREENLOGIN_STATE* state = &screenlogin_state;
+
+	state->elm_USER_NAME_RULES->flags |= GUI_FLG_HIDDEN;
+	state->elm_NO_USER_OR_PASSWORD->flags |= GUI_FLG_HIDDEN;
+	state->elm_INCORRECT_EMAIL->flags |= GUI_FLG_HIDDEN;
+	state->elm_USERNAME_TAKEN->flags |= GUI_FLG_HIDDEN;
+	state->elm_PASSWORD_RULES->flags |= GUI_FLG_HIDDEN;
+	state->elm_EMAIL_RULES->flags |= GUI_FLG_HIDDEN;
+ }
+
+void screenlogin_hide_all(void)
+{
+	SCREENLOGIN_STATE* state = &screenlogin_state;
+
+	screenlogin_hide_all_messages();
+
+	state->elm_LOG_IN->flags |= GUI_FLG_HIDDEN;
+	state->elm_SIGN_UP->flags |= GUI_FLG_HIDDEN;
+
+	state->elm_grp_LOGIN->flags |= GUI_FLG_HIDDEN;
+	state->elm_grp_PASSWORD->flags |= GUI_FLG_HIDDEN;
+	state->elm_grp_PASSWORD_AGAIN->flags |= GUI_FLG_HIDDEN;
+	state->elm_grp_EMAIL->flags |= GUI_FLG_HIDDEN;
+
+	state->elm_BUTTON_LOGIN->flags |= GUI_FLG_HIDDEN;
+	state->elm_BUTTON_REGISTER->flags |= GUI_FLG_HIDDEN;
+}
+
+void screeenlogin_show_log_in(void)
+{
+	SCREENLOGIN_STATE* state = &screenlogin_state;
+
+	screenlogin_hide_all();
+
+	state->elm_LOG_IN->flags &= ~GUI_FLG_HIDDEN;
+
+	state->elm_grp_LOGIN->flags &= ~GUI_FLG_HIDDEN;
+	state->elm_grp_PASSWORD->flags &= ~GUI_FLG_HIDDEN;
+
+	state->elm_BUTTON_LOGIN->flags &= ~GUI_FLG_HIDDEN;
+	state->elm_BUTTON_REGISTER->flags &= ~GUI_FLG_HIDDEN;
+}
+
+void screeenlogin_show_sign_up(void)
+{
+	SCREENLOGIN_STATE* state = &screenlogin_state;
+
+	screenlogin_hide_all();
+
+	state->elm_SIGN_UP->flags &= ~GUI_FLG_HIDDEN;
+
+	state->elm_grp_LOGIN->flags &= ~GUI_FLG_HIDDEN;
+	state->elm_grp_PASSWORD->flags &= ~GUI_FLG_HIDDEN;
+	state->elm_grp_PASSWORD_AGAIN->flags &= ~GUI_FLG_HIDDEN;
+	state->elm_grp_EMAIL->flags &= ~GUI_FLG_HIDDEN;
+
+	state->elm_BUTTON_LOGIN->flags &= ~GUI_FLG_HIDDEN;
+	state->elm_BUTTON_REGISTER->flags &= ~GUI_FLG_HIDDEN;
+}
+
+void screenlogin_enter(void)
+{
+	game_screen_exit();
+
+	GAME_SCREEN_UPDATE = screenlogin_update;
+	GAME_SCREEN_EXIT = screenlogin_exit;
+
+	screenlogin_init();
+
+	SCREENLOGIN_STATE* state = &screenlogin_state;
+
+	screeenlogin_show_log_in();
+	//screeenlogin_show_sign_up();
+	gui_layout_tile(state->pln);
+
+	gui_add_display(state->dsp);
+}
+
 void screenlogin_update(void)
 {
 	//----------------------------------------------------------------------------------
@@ -117,90 +206,11 @@ void screenlogin_update(void)
 			state->elm_grp_PASSWORD->flags ^= GUI_FLG_HIDDEN | GUI_FLG_DISABLED;
 			gui_layout_tile(state->pln);
 		}
-
-		if(gui_kb_last_key() == KEY_S)
-		{
-			SCREENLOGIN_STATE* state = &screenlogin_state;
-			state->elm_grp_LOGIN->flags ^= GUI_FLG_HIDDEN | GUI_FLG_DISABLED;
-			gui_layout_tile(state->pln);
-		}
-
-		if(gui_kb_last_key() == KEY_D)
-		{
-			SCREENLOGIN_STATE* state = &screenlogin_state;
-			state->elm_USER_NAME_RULES->flags ^= GUI_FLG_HIDDEN | GUI_FLG_DISABLED;
-			gui_layout_tile(state->pln);
-		}
-
-        if(gui_kb_last_key() == KEY_F)
-		{
-			SCREENLOGIN_STATE* state = &screenlogin_state;
-			state->elm_NO_USER_OR_PASSWORD->flags ^= GUI_FLG_HIDDEN | GUI_FLG_DISABLED;
-			gui_layout_tile(state->pln);
-		}
-		if(gui_kb_last_key() == KEY_G)
-		{
-			SCREENLOGIN_STATE* state = &screenlogin_state;
-			state->elm_INCORRECT_EMAIL->flags ^= GUI_FLG_HIDDEN | GUI_FLG_DISABLED;
-			gui_layout_tile(state->pln);
-		}
-		if(gui_kb_last_key() == KEY_H)
-		{
-			SCREENLOGIN_STATE* state = &screenlogin_state;
-			state->elm_USERNAME_TAKEN->flags ^= GUI_FLG_HIDDEN | GUI_FLG_DISABLED;
-			gui_layout_tile(state->pln);
-		}
-		if(gui_kb_last_key() == KEY_J)
-		{
-			SCREENLOGIN_STATE* state = &screenlogin_state;
-			state->elm_PASSWORD_RULES->flags ^= GUI_FLG_HIDDEN | GUI_FLG_DISABLED;
-			gui_layout_tile(state->pln);
-		}
-		if(gui_kb_last_key() == KEY_K)
-		{
-			SCREENLOGIN_STATE* state = &screenlogin_state;
-			state->elm_LOG_IN->flags ^= GUI_FLG_HIDDEN | GUI_FLG_DISABLED;
-			gui_layout_tile(state->pln);
-		}
-		if(gui_kb_last_key() == KEY_L)
-		{
-			SCREENLOGIN_STATE* state = &screenlogin_state;
-			state->elm_SIGN_UP->flags ^= GUI_FLG_HIDDEN | GUI_FLG_DISABLED;
-			gui_layout_tile(state->pln);
-		}
 	}
-}
-
-//password rules check without isalnum() function
-bool screenlogin_is_valid_password(const char* password)
-{
-	if(strlen(password) < 3 || strlen(password) > 20)
-		return false;
-
-	for(int i = 0; i < strlen(password); i++)
-	{
-		if(!((password[i] >= 'a' && password[i] <= 'z') || (password[i] >= 'A' && password[i] <= 'Z') || (password[i] >= '0' && password[i] <= '9')))
-			return false;
-	}
-
-	return true;
 }
 
 void screenlogin_exit(void)
 {
 	SCREENLOGIN_STATE* state = &screenlogin_state;
 	gui_remove_display(state->dsp);
-}
-
-void screenlogin_enter(void)
-{
-	game_screen_exit();
-
-	GAME_SCREEN_UPDATE = screenlogin_update;
-	GAME_SCREEN_EXIT = screenlogin_exit;
-
-	screenlogin_init();
-
-	SCREENLOGIN_STATE* state = &screenlogin_state;
-	gui_add_display(state->dsp);
 }

@@ -25,6 +25,16 @@ GUI_ELEM* gui_text_input(const char* txt)
 	return elm;
 }
 
+GUI_ELEM* gui_text_input_password(const char* txt)
+{
+	GUI_ELEM* elm = gui_text_input(txt);
+	GUI_TEXT_INPUT* ti = elm->data;
+
+	ti->flags |= GUI_TEXT_INPUT_FLG_PASSWORD;
+
+	return elm;
+}
+
 void gui_text_input_set_txt(GUI_ELEM* elm, const char* txt)
 {
 	GUI_TEXT_INPUT* ti = elm->data;
@@ -60,7 +70,18 @@ p32 gui_text_input_calc_content_size(GUI_ELEM* elm, int32 cur_pos)
 		ti->txt[cur_pos] = 0;
 	}
 
-	p32 sz = gui_helper_str_calc_content_size(ti->txt, style, elm->gui_state);
+	p32 sz = { 0 };
+
+	if(ti->flags & GUI_TEXT_INPUT_FLG_PASSWORD)
+	{
+		static char tmp_txt[GUI_TEXT_INPUT_TXT_MAX_SIZE];
+		int32 txt_len = strlen(ti->txt);
+		memset(tmp_txt, '*', txt_len);
+		tmp_txt[txt_len] = 0;
+		sz = gui_helper_str_calc_content_size(tmp_txt, style, elm->gui_state);
+	}
+	else
+		sz = gui_helper_str_calc_content_size(ti->txt, style, elm->gui_state);
 
 	if(cur_pos >= 0)
 		ti->txt[cur_pos] = tmp_chr;
@@ -120,7 +141,16 @@ void gui_text_input_show(GUI_ELEM* elm, p32 offs)
 		if(cur_pos.x + ti->x_offs < 2)
 			ti->x_offs = -cur_pos.x + 1;
 
-		rd2_font_draw_str(fnt, ti->txt, ti->x_offs, valgn, 1, 0, gui_color(style->color[elm->gui_state]));
+		if(ti->flags & GUI_TEXT_INPUT_FLG_PASSWORD)
+		{
+			static char tmp_txt[GUI_TEXT_INPUT_TXT_MAX_SIZE];
+			int32 txt_len = strlen(ti->txt);
+			memset(tmp_txt, '*', txt_len);
+			tmp_txt[txt_len] = 0;
+			rd2_font_draw_str(fnt, tmp_txt, ti->x_offs, valgn, 1, 0, gui_color(style->color[elm->gui_state]));
+		}
+		else
+			rd2_font_draw_str(fnt, ti->txt, ti->x_offs, valgn, 1, 0, gui_color(style->color[elm->gui_state]));
 
 		if((elm == gui_input_elm_pressed() || elm == gui_input_elm_focused()) && (!hal_is_draw_flash_time() || ti->flags & GUI_TEXT_INPUT_FLG_SHOW_CURSOR))
 			rd2_rect_fill(cur_pos.x + ti->x_offs, valgn - 2, 2, fnt_height + 4, gui_color(PAL_BLACK));

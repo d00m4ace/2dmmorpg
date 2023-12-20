@@ -263,11 +263,16 @@ void gui_kb_show_keyboard(GUI_ELEM* elm)
 	GUI_ELEM* kb_ti = gui_plane_get_elm(gui_display_get_plane(gui_kb_dsp, 0), 50);
 	gui_text_input_set_txt(kb_ti, "");
 
+	((GUI_TEXT_INPUT*)kb_ti->data)->flags = 0;
+
 	if(gui_kb.kb_from != NULL)
 	{
 		if(gui_kb.kb_from->elem_type == GUI_ELEM_TEXT_INPUT)
 		{
 			gui_text_input_set_txt(kb_ti, gui_text_input_get_txt(gui_kb.kb_from));
+
+			if(((GUI_TEXT_INPUT*)gui_kb.kb_from->data)->flags & GUI_TEXT_INPUT_FLG_PASSWORD)
+				((GUI_TEXT_INPUT*)kb_ti->data)->flags |= GUI_TEXT_INPUT_FLG_PASSWORD;
 		}
 	}
 

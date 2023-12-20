@@ -2,6 +2,7 @@
 
 #define GUI_TEXT_INPUT_FLG_NONE (0U)
 #define GUI_TEXT_INPUT_FLG_SHOW_CURSOR (1U<<0)
+#define GUI_TEXT_INPUT_FLG_PASSWORD (1U<<1)
 
 typedef struct GUI_TEXT_INPUT
 {
@@ -13,6 +14,7 @@ typedef struct GUI_TEXT_INPUT
 
 //--------------------------------------------------------------------------------------
 GUI_ELEM* gui_text_input(const char* txt);
+GUI_ELEM* gui_text_input_password(const char* txt);
 //--------------------------------------------------------------------------------------
 void gui_text_input_show(GUI_ELEM* elm, p32 offs);
 void gui_text_input_on_input(GUI_ELEM* elm);
