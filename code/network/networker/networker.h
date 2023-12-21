@@ -14,6 +14,8 @@ typedef enum NETWORKER_JOB_ID_ENUM
 
 	NETWORKER_JOB_ID_DOWNLOAD_FILE,
 	NETWORKER_JOB_ID_UPLOAD_FILE,
+
+	NETWORKER_JOB_ID_PCHAR,
 } NETWORKER_JOB_ID_ENUM;
 
 typedef struct NETWORKER NETWORKER;
@@ -91,6 +93,7 @@ NW_PUSH(netsession) \
 NW_READ(PACKET,&PACKET_STRUCT_NAME,BLOB_PTR)
 
 #define NW_IF_PACKET(PACKET) if(packet_id == PACKET##_ID)
+#define NW_IF_NOT_PACKET(PACKET) if(packet_id != PACKET##_ID)
 #define NW_IF_PACKET_OR(PACKET,OR) if((packet_id == PACKET##_ID) || (OR))
 ////////////////////////////////////////////////////
 #include "client/clnt_download_file.h"

@@ -2,7 +2,7 @@ static c_vec_networker g_vec_networkers_client;
 static c_vec_networker g_vec_networkers_server;
 ////////////////////////////////////////////////////
 static char g_nt_bufer[NETSESSION_STATE_BUF_SIZE];
-NETPACKET_BLOB g_np_blob = { g_nt_bufer, 0, NETSESSION_STATE_BUF_SIZE };
+static NETPACKET_BLOB g_np_blob = { g_nt_bufer, 0, NETSESSION_STATE_BUF_SIZE };
 ////////////////////////////////////////////////////
 void networkers_init(void)
 {

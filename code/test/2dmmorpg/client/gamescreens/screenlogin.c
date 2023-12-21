@@ -206,6 +206,30 @@ void screenlogin_update(void)
 			state->elm_grp_PASSWORD->flags ^= GUI_FLG_HIDDEN | GUI_FLG_DISABLED;
 			gui_layout_tile(state->pln);
 		}
+
+		if(gui_kb_last_key() == KEY_S)
+		{
+			kernel_lock();
+
+			if(player_char->user_network_state == PLAYER_CHAR_NETWORK_STATE_CONNECTED)
+			{
+				NETPACKET_DATASET_256 req = { 0 };
+				req.data[0] = 1;
+				req.data[1] = 2;
+				req.data[2] = 3;
+				req.data[3] = 4;
+				req.data[4] = 5;
+				req.data[5] = 55;
+				req.data_size = 5;
+
+				NETPACKET_BLOB* blb = new_netpacket_blob(NETPACKET_DATASET_256_SIZE());
+				NETPACKET_DATASET_256_WRITE(blb, &req);
+				blb->pos = 0;
+				c_vec_push(&player_char->vec_netblob_send, blb);
+			}
+
+			kernel_free();
+		}
 	}
 }
 
