@@ -393,7 +393,11 @@ KERNEL_THREAD_FUNC(thread_proc_client_listening)
 									NETWORKER* networker = netsession->user_data;
 									dt_out.pos = 0;
 
-									if(!networker->on_request(networker, netsession, &dt_out)) break;
+									if(!networker->on_request(networker, netsession, &dt_out))
+									{
+										kernel_free();
+										break;
+									}
 								}
 							}
 							kernel_free();

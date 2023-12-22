@@ -45,7 +45,6 @@ bool pchar_networker_on_disconnect(NETWORKER* networker, NETSESSION_STATE* netse
 
 	player_char->user_network_state = PLAYER_CHAR_NETWORK_STATE_DISCONNECTED;
 
-	////CFREE(pchar_networker->user_data);
 	pchar_networker->user_data = NULL;
 
 	networker_on_disconnect(networker, netsession);
@@ -62,21 +61,33 @@ bool pchar_networker_on_request(NETWORKER* networker, NETSESSION_STATE* netsessi
 	if(player_char->user_network_state == PLAYER_CHAR_NETWORK_STATE_NONE)
 		player_char->user_network_state = PLAYER_CHAR_NETWORK_STATE_CONNECTED;
 
+	if(player_char->user_network_state == PLAYER_CHAR_NETWORK_STATE_DISCONNECT)
+		return false;
+
 	NW_IF_NOT_PACKET(NETPACKET_ON_IDLE)
 	{
-		int packet_size = netpacket_read_packet_size(req);
-		NETPACKET_BLOB* blb = new_netpacket_blob(packet_size);
-		netpacket_write_packet(blb, packet_id, packet_size, req->data + req->pos + 4);
-		blb->pos = 0;
-		c_vec_push(&player_char->vec_netblob_recv, blb);
+		NETPACKET_BLOB* blb = new_netpacket_blob(netpacket_read_packet_size(req));
+
+		if(!netpacket_write_packet_from_blob(blb, req))
+		{
+			NP_BLOB_FREE(blb);
+			return false;
+		}
+
+		NP_PUSH_BLOB(&player_char->vec_netblob_recv, blb);
 	}
 
 	if(c_vec_count(&player_char->vec_netblob_send))
 	{
-		NETPACKET_BLOB* blb = (NETPACKET_BLOB*)c_vec_get(&player_char->vec_netblob_send, 0);
-		c_vec_remove_at(&player_char->vec_netblob_send, 0);
-		netsession_push_packet(netsession, blb, false);
-		free_netpacket_blob(blb);
+		NETPACKET_BLOB* blb = netpacket_pop(&player_char->vec_netblob_send);
+
+		if(!netsession_push_packet(netsession, blb, false))
+		{
+			NP_BLOB_FREE(blb);
+			return false;
+		}
+
+		NP_BLOB_FREE(blb);
 	}
 	else
 	{
@@ -87,17 +98,3 @@ bool pchar_networker_on_request(NETWORKER* networker, NETSESSION_STATE* netsessi
 
 	return true;
 }
-
-NETPACKET_BLOB* new_netpacket_blob(uint32 size)
-{
-	NETPACKET_BLOB* blob = CALLOC(1, sizeof(NETPACKET_BLOB));
-	blob->data = CALLOC(1, size);
-	blob->size = size;
-	return blob;
-}
-void free_netpacket_blob(NETPACKET_BLOB* blob)
-{
-	CFREE(blob->data);
-	CFREE(blob);
-}
-

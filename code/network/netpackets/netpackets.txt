@@ -69,3 +69,6 @@ NETPACKET_DATASET_16;
 int32 data_size;
 uint8 data[16];
 
+NETPACKET_USER_LOGIN;
+char user_name[USER_NAME_MAX];
+char user_password_hash[USER_PASSWORD_MAX]

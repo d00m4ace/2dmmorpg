@@ -259,7 +259,11 @@ void tcpclient_recv_send(NETSESSION_STATE* netsession, NETSOCKET_STATE* socket_s
 						NETWORKER* net_worker = netsession->user_data;
 						dt_out.pos = 0;
 
-						if(!net_worker->on_request(net_worker, netsession, &dt_out)) break;
+						if(!net_worker->on_request(net_worker, netsession, &dt_out))
+						{
+							kernel_free();
+							break;
+						}
 					}
 				}
 				kernel_free();

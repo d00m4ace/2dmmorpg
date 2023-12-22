@@ -39,6 +39,18 @@ void screenlogin_init(void)
 {
 	SCREENLOGIN_STATE* state = &screenlogin_state;
 
+	{
+		char salt[MAX_SALT_LENGTH + 1];
+		char hashed_password[256];
+
+		//generate_salt(salt, MAX_SALT_LENGTH);
+		strcpy(salt, PASSWORD_HASH_SALT);
+		hash_password("d00m4ace1234", salt, hashed_password);
+
+		printf("Salt: %s\n", salt);
+		printf("Hashed Password: %s\n", hashed_password);
+	}
+
 	if(!state->is_init)
 	{
 		state->is_init = true;
@@ -122,7 +134,7 @@ void screenlogin_hide_all_messages(void)
 	state->elm_USERNAME_TAKEN->flags |= GUI_FLG_HIDDEN;
 	state->elm_PASSWORD_RULES->flags |= GUI_FLG_HIDDEN;
 	state->elm_EMAIL_RULES->flags |= GUI_FLG_HIDDEN;
- }
+}
 
 void screenlogin_hide_all(void)
 {
@@ -198,6 +210,21 @@ void screenlogin_update(void)
 	rd2_rect_fill(0, 0, 1000, 1000, gui_color(PAL_SILVER));
 	//----------------------------------------------------------------------------------
 
+	{
+		if(c_vec_count(&player_char->vec_netblob_recv))
+		{
+			NETPACKET_BLOB* blb = netpacket_pop(&player_char->vec_netblob_recv);
+
+			NP_IF_PACKET(blb, NETPACKET_SERVER_WELCOME)
+			{
+				NP_CREATE_READ_PACKET(blb, NETPACKET_SERVER_WELCOME, packet);
+
+				if(packet_is_read)
+					PRINT("SERVER WELCOME\n");			
+			}
+		}
+	}
+
 	if(hal_key_down(KEY_LEFT_CONTROL))
 	{
 		if(gui_kb_last_key() == KEY_A)
@@ -209,8 +236,6 @@ void screenlogin_update(void)
 
 		if(gui_kb_last_key() == KEY_S)
 		{
-			kernel_lock();
-
 			if(player_char->user_network_state == PLAYER_CHAR_NETWORK_STATE_CONNECTED)
 			{
 				NETPACKET_DATASET_256 req = { 0 };
@@ -222,13 +247,14 @@ void screenlogin_update(void)
 				req.data[5] = 55;
 				req.data_size = 5;
 
-				NETPACKET_BLOB* blb = new_netpacket_blob(NETPACKET_DATASET_256_SIZE());
-				NETPACKET_DATASET_256_WRITE(blb, &req);
-				blb->pos = 0;
-				c_vec_push(&player_char->vec_netblob_send, blb);
+				NP_PUSH(&player_char->vec_netblob_send, NETPACKET_DATASET_256, &req);
 			}
+		}
 
-			kernel_free();
+		if(gui_kb_last_key() == KEY_D)
+		{
+			if(player_char->user_network_state == PLAYER_CHAR_NETWORK_STATE_CONNECTED)
+				player_char->user_network_state = PLAYER_CHAR_NETWORK_STATE_DISCONNECT;
 		}
 	}
 }

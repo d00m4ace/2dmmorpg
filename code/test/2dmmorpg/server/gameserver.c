@@ -98,6 +98,29 @@ int main(int argc, char** argv)
 #ifdef USE_ONE_KERNEL_LOCK
 			kernel_lock();
 #endif
+			{
+				for(int i = 0; i < c_vec_count(&vec_player_chars); i++)
+				{
+					PLAYER_CHAR* pchar = c_vec_get(&vec_player_chars, i);
+
+					NETPACKET_BLOB* blb = NP_POP_BLOB(&pchar->vec_netblob_recv);
+
+					if(blb)
+					{
+						NP_IF_PACKET(blb, NETPACKET_DATASET_256)
+						{
+							NP_CREATE_READ_PACKET(blb, NETPACKET_DATASET_256, pkt);
+
+							PRINT("recv:%d %d %d %d %d %d %d", pkt.data_size, pkt.data[0], pkt.data[1], pkt.data[2], pkt.data[3], pkt.data[4], pkt.data[5]);
+						}
+					}
+
+					NP_BLOB_FREE(blb);
+
+					//pchar->user_network_state = PLAYER_CHAR_NETWORK_STATE_DISCONNECT;					
+				}
+			}
+
 			server_threads_clean();
 			server_netsession_clean();
 

@@ -195,6 +195,16 @@ bool NETPACKET_DATASET_16_WRITE(NETPACKET_BLOB* dst, NETPACKET_DATASET_16* pack)
 	return true;
 }
 
+bool NETPACKET_USER_LOGIN_WRITE(NETPACKET_BLOB* dst, NETPACKET_USER_LOGIN* pack)
+{
+	uint16 packet_size = NETPACKET_USER_LOGIN_SIZE(), packet_id = NETPACKET_USER_LOGIN_ID;
+	if(!netpacket_write_uint16(dst, &packet_size)) return false;
+	if(!netpacket_write_uint16(dst, &packet_id)) return false;
+	if(!netpacket_write_array_uint8(dst, &pack->user_name,sizeof(pack->user_name))) return false;
+	if(!netpacket_write_array_uint8(dst, &pack->user_password_hash,sizeof(pack->user_password_hash))) return false;
+	return true;
+}
+
 bool NETPACKET_CLIENT_HI_READ(NETPACKET_BLOB* dst, NETPACKET_CLIENT_HI* pack)
 {
 	uint16 packet_size, packet_id;
@@ -476,6 +486,20 @@ bool NETPACKET_DATASET_16_READ(NETPACKET_BLOB* dst, NETPACKET_DATASET_16* pack)
 	return true;
 }
 
+bool NETPACKET_USER_LOGIN_READ(NETPACKET_BLOB* dst, NETPACKET_USER_LOGIN* pack)
+{
+	uint16 packet_size, packet_id;
+	uint32 dstpos = dst->pos;
+	if(!netpacket_read_uint16(dst, &packet_size)) return false;
+	if(!netpacket_read_uint16(dst, &packet_id)) return false;
+	if(packet_id != NETPACKET_USER_LOGIN_ID) return false;
+	if(packet_size > NETPACKET_USER_LOGIN_SIZE()) return false;
+	if(!netpacket_read_array_uint8(dst, &pack->user_name,sizeof(pack->user_name))) return false;
+	if(!netpacket_read_array_uint8(dst, &pack->user_password_hash,sizeof(pack->user_password_hash))) return false;
+	dst->pos = dstpos + packet_size;
+	return true;
+}
+
 int32 NETPACKET_CLIENT_HI_SIZE(void)
 {
 	static NETPACKET_CLIENT_HI pack = {0};
@@ -649,6 +673,15 @@ int32 NETPACKET_DATASET_16_SIZE(void)
 	int32 packet_size = 2+2;
 	packet_size += sizeof(pack.data_size);
 	packet_size += sizeof(pack.data);
+	return packet_size;
+}
+
+int32 NETPACKET_USER_LOGIN_SIZE(void)
+{
+	static NETPACKET_USER_LOGIN pack = {0};
+	int32 packet_size = 2+2;
+	packet_size += sizeof(pack.user_name);
+	packet_size += sizeof(pack.user_password_hash);
 	return packet_size;
 }
 
@@ -1408,6 +1441,42 @@ bool C_VEC_NETPACKET_DATASET_16_READ(NETPACKET_BLOB* dst, C_VEC_NETPACKET_DATASE
 	dst->pos = dstpos + packet_size;
 	return true;
 }
+int32 C_VEC_NETPACKET_USER_LOGIN_SIZE(C_VEC_NETPACKET_USER_LOGIN* vec)
+{
+	int32 packet_size = 4 + 4 + 4;
+	packet_size += vec->count * NETPACKET_USER_LOGIN_SIZE();
+	return packet_size;
+}
+bool C_VEC_NETPACKET_USER_LOGIN_WRITE(NETPACKET_BLOB* dst, C_VEC_NETPACKET_USER_LOGIN* vec)
+{
+	uint32 packet_size = C_VEC_NETPACKET_USER_LOGIN_SIZE(vec), packet_id = NETPACKET_USER_LOGIN_ID, packet_count = vec->count;
+	if(!netpacket_write_uint32(dst, &packet_size)) return false;
+	if(!netpacket_write_uint32(dst, &packet_id)) return false;
+	if(!netpacket_write_uint32(dst, &packet_count)) return false;
+	c_vec_foreach_ptr(vec, NETPACKET_USER_LOGIN * pack)
+	{
+		if(!NETPACKET_USER_LOGIN_WRITE(dst, pack)) return false;
+	}
+	return true;
+}
+bool C_VEC_NETPACKET_USER_LOGIN_READ(NETPACKET_BLOB* dst, C_VEC_NETPACKET_USER_LOGIN* vec)
+{
+	uint32 packet_size = 0, packet_id = NETPACKET_USER_LOGIN_ID, packet_count;
+	uint32 dstpos = dst->pos;
+	if(!netpacket_read_uint32(dst, &packet_size)) return false;
+	if(!netpacket_read_uint32(dst, &packet_id)) return false;
+	if(!netpacket_read_uint32(dst, &packet_count)) return false;
+	if(packet_id != NETPACKET_USER_LOGIN_ID) return false;
+	if(packet_size > (4+4+4 + packet_count * NETPACKET_USER_LOGIN_SIZE())) return false;
+	for(int32 i=0; i < packet_count; i++)
+	{
+		NETPACKET_USER_LOGIN pack = { 0 };
+		if(!NETPACKET_USER_LOGIN_READ(dst, &pack)) return false;
+		c_vec_push(vec,pack);
+	}
+	dst->pos = dstpos + packet_size;
+	return true;
+}
 const char* netpackets_get_enum_string_by_id(int id)
 {
 	if(id < NETPACKETS_START_ID)
@@ -1457,6 +1526,8 @@ const char* netpackets_get_enum_string_by_id(int id)
 		return "NETPACKET_DATASET_32_ID";
 	case NETPACKET_DATASET_16_ID:
 		return "NETPACKET_DATASET_16_ID";
+	case NETPACKET_USER_LOGIN_ID:
+		return "NETPACKET_USER_LOGIN_ID";
 	default:
 		return "Unknown packet id";
 	}

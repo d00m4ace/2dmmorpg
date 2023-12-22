@@ -25,19 +25,15 @@ void player_char_init(PLAYER_CHAR* pchar)
 
 void player_char_deinit(PLAYER_CHAR* pchar)
 {
-	c_vec_foreach_ptr(&pchar->vec_netblob_send, NETPACKET_BLOB * np_blob)
-	{
-		c_vec_remove(&pchar->vec_netblob_send, np_blob);
-		//netpacket_blob_deinit(np_blob);
-	}
+	for(int i = 0; i < c_vec_count(&pchar->vec_netblob_send); i++)
+		NP_BLOB_FREE(c_vec_get(&pchar->vec_netblob_send, i));
 
-	c_vec_foreach_ptr(&pchar->vec_netblob_recv, NETPACKET_BLOB * np_blob)
-	{
-		c_vec_remove(&pchar->vec_netblob_recv, np_blob);
-		//netpacket_blob_deinit(np_blob);
-	}
+	for(int i = 0; i < c_vec_count(&pchar->vec_netblob_recv); i++)
+		NP_BLOB_FREE(c_vec_get(&pchar->vec_netblob_recv, i));
+
+	c_vec_clear(&pchar->vec_netblob_send);
+	c_vec_clear(&pchar->vec_netblob_recv);
 
 	c_vec_deinit(&pchar->vec_netblob_send);
 	c_vec_deinit(&pchar->vec_netblob_recv);
 }
-

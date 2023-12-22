@@ -84,18 +84,26 @@ void TraceLog(int logLevel, const char* text, ...);
 ////////////////////////////////
 #define DEFAULT_BACKLOG 10000
 #define DEFAULT_LOOP_BACK_NOP_TIME_MS 30
+////////////////////////////////
 
+////////////////////////////////
 //#define DEFAULT_SOCKET_TIMEOUT_MS (5000)
 //#define DEFAULT_THREADS_TIMEOUT (6*CLOCKS_PER_SEC)
-
+////////////////////////////////
 #define DEFAULT_SOCKET_TIMEOUT_MS (60000*5)
 #define DEFAULT_THREADS_TIMEOUT (5*60*CLOCKS_PER_SEC)
+////////////////////////////////
 
 ////////////////////////////////
 #define NETMONITOR_SHOW_NETPACKETS 0
 #define NETMONITOR_SKIP_PACKET_COMMON_NOP_ID 1
 ////////////////////////////////
 #define FILENAME_MAX_SIZE 80
+////////////////////////////////
+#define USER_NAME_MAX 20
+#define USER_PASSWORD_MAX 50
+
+#define PASSWORD_HASH_SALT "kSEo2InipM4sYIES"
 ////////////////////////////////
 
 #ifdef PLATFORM_ANDROID
