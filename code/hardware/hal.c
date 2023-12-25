@@ -508,7 +508,6 @@ void hal_draw_end(void)
 	is_draw_flash_time = (hal_draw_frame_count % (flash_frames * 2)) > flash_frames;
 }
 
-
 uint32 hal_get_draw_frame_count(void)
 {
 	return hal_draw_frame_count;
@@ -517,6 +516,11 @@ uint32 hal_get_draw_frame_count(void)
 bool hal_is_draw_flash_time(void)
 {
 	return is_draw_flash_time;
+}
+
+uint32 hal_time_ms(void)
+{
+	return (1000ULL * clock()) / CLOCKS_PER_SEC;
 }
 
 void hal_draw_fps(int x, int y)
@@ -578,10 +582,10 @@ char* hal_font8_chars_set(int font8)
 {
 	switch(font8)
 	{
-	case FONT8_ZX_RUS: return zx_win1251_chars_set;
-	case FONT8_BOLD_RUS: return bold8_rus_chars_set;
-	case FONT8_DOS_RUS: return dos_rus_chars_set;
-	default:
+		case FONT8_ZX_RUS: return zx_win1251_chars_set;
+		case FONT8_BOLD_RUS: return bold8_rus_chars_set;
+		case FONT8_DOS_RUS: return dos_rus_chars_set;
+		default:
 		break;
 	}
 	return NULL;

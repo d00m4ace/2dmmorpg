@@ -235,6 +235,10 @@
  equal to number of elements in the vector, the value is added to the end, like #c_vec_push().
  @param value The value to insert.
  */
+
+/*
+FIXED BUG BY D00M4ACE! NOT COPY LAST ELEMENT!
+ORIGINAL CODE:
 #define c_vec_insert_at(vec, index, value) \
     do { \
         if (c_vec_ensure_capacity(vec, 1)) { \
@@ -242,6 +246,20 @@
             if (_i1 + 1 < (vec)->count) { \
                 memmove((vec)->values + _i1 + 1, (vec)->values + _i1, \
                         ((vec)->count - _i1 - 1) * sizeof(*(vec)->values)); \
+            } \
+            (vec)->values[_i1] = (value); \
+            (vec)->count++; \
+        } \
+    } while (0)
+*/
+
+#define c_vec_insert_at(vec, index, value) \
+    do { \
+        if (c_vec_ensure_capacity(vec, 1)) { \
+            size_t _i1 = (index); \
+            if (_i1 < (vec)->count) { \
+                memmove((vec)->values + _i1 + 1, (vec)->values + _i1, \
+                        ((vec)->count - _i1) * sizeof(*(vec)->values)); \
             } \
             (vec)->values[_i1] = (value); \
             (vec)->count++; \

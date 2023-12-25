@@ -35,4 +35,9 @@ void game_txt_en(const char* txt[])
 
 	txt[TXT_ID_EMAIL_RULES] = "EMAIL ADDRESS can contain letters (a - z) or (A - Z), digits (0 - 9), and these special characters: dot (.), underscore (_), and dash (-), and the at symbol (@). Other characters are not permitted.";
 
+	txt[TXT_ID_CONNECTING] = "Establishing connection to the server... Please wait.";
+	txt[TXT_ID_CONNECTED] = "Connection successful! Welcome to the game.";
+	txt[TXT_ID_DISCONNECTED] = "You have been disconnected from the server.";
+	txt[TXT_ID_CONNECTION_ERROR] = "Error: Unable to connect to the server. Please check your network settings and try again.";
+
 };

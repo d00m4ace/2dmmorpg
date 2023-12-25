@@ -71,6 +71,9 @@ bool netsession_send_packet(NETSESSION_STATE* netsession, NETPACKET_BLOB* dst)
 		return false;
 	}
 
+	if(packet_id == PACKET_COMMON_PING_ID)
+		netsession->time_ping_send = hal_time_ms();
+
 	src.pos = 0;
 
 	assert(packet_size <= dst->size);
@@ -101,6 +104,9 @@ bool netsession_recv_packet(NETSESSION_STATE* netsession, NETPACKET_BLOB* src)
 		kernel_free();
 		return false;
 	}
+
+	if(packet_id == PACKET_COMMON_PONG_ID)
+		netsession->time_ping = hal_time_ms() - netsession->time_ping_send;
 
 	src->pos = 0;
 

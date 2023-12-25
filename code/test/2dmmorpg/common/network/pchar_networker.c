@@ -64,6 +64,10 @@ bool pchar_networker_on_request(NETWORKER* networker, NETSESSION_STATE* netsessi
 	if(player_char->user_network_state == PLAYER_CHAR_NETWORK_STATE_DISCONNECT)
 		return false;
 
+	{
+		player_char->time_ping = netsession->time_ping;
+	}
+
 	NW_IF_NOT_PACKET(NETPACKET_ON_IDLE)
 	{
 		NETPACKET_BLOB* blb = new_netpacket_blob(netpacket_read_packet_size(req));
@@ -77,21 +81,23 @@ bool pchar_networker_on_request(NETWORKER* networker, NETSESSION_STATE* netsessi
 		NP_PUSH_BLOB(&player_char->vec_netblob_recv, blb);
 	}
 
-	if(c_vec_count(&player_char->vec_netblob_send))
 	{
-		NETPACKET_BLOB* blb = netpacket_pop(&player_char->vec_netblob_send);
+		NETPACKET_BLOB* blb = NP_POP_BLOB(&player_char->vec_netblob_send);
 
-		if(!netsession_push_packet(netsession, blb, false))
+		if(blb)
 		{
-			NP_BLOB_FREE(blb);
-			return false;
-		}
+			if(!netsession_push_packet(netsession, blb, false))
+			{
+				NP_BLOB_FREE(blb);
+				return false;
+			}
 
-		NP_BLOB_FREE(blb);
-	}
-	else
-	{
-		NW_WRITE_PUSH(NETPACKET_ON_IDLE, NULL);
+			NP_BLOB_FREE(blb);
+		}
+		else
+		{
+			NW_WRITE_PUSH(NETPACKET_ON_IDLE, NULL);
+		}
 	}
 
 	//PRINT("session_id:%d PCHAR_NETWORKER", netsession->session_id);

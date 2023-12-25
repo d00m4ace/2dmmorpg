@@ -5,6 +5,7 @@ NETPACKET_BLOB* new_netpacket_blob(uint32 size);
 void free_netpacket_blob(NETPACKET_BLOB* blob);
 
 void netpacket_push(netblob_vec_t* vec, NETPACKET_BLOB* blob);
+void netpacket_push_top(netblob_vec_t* vec, NETPACKET_BLOB* blob);
 NETPACKET_BLOB* netpacket_pop(netblob_vec_t* vec);
 
 bool netpacket_write_packet_from_blob(NETPACKET_BLOB* dst, NETPACKET_BLOB* src);
@@ -17,6 +18,7 @@ netpacket_push(VEC_PTR, blb); \
 }
 
 #define NP_PUSH_BLOB(VEC_PTR,BLOB_PTR) netpacket_push(VEC_PTR, BLOB_PTR)
+#define NP_PUSH_TOP_BLOB(VEC_PTR,BLOB_PTR) netpacket_push_top(VEC_PTR, BLOB_PTR)
 
 #define NP_POP_BLOB(VEC_PTR) netpacket_pop(VEC_PTR)
 #define NP_BLOB_FREE(BLOB_PTR) free_netpacket_blob(BLOB_PTR)

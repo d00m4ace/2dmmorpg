@@ -23,6 +23,7 @@ NETSESSION_STATE client_netsession = { 0 };
 PLAYER_CHAR* player_char = NULL;
 //--------------------------------------------------------------------------------------
 #include "gamescreens/screenlogin.c"
+#include "gamescreens/screenconnect.c"
 //--------------------------------------------------------------------------------------
 int main(void)
 {
@@ -35,10 +36,7 @@ int main(void)
 	//--------------------------------------------------------------------------------------
 	c_vec_init(&vec_player_chars);
 	//--------------------------------------------------------------------------------------
-	//tcpclient_connect(&client_netsession, clnt_download_file_get("output/test.txt", "output/test.txt"), "192.168.2.6", 7979);
-	NETWORKER* clnt_networker = clnt_pchar_networker_get();
-	player_char = ((PCHAR_NETWORKER*)clnt_networker->worker_data)->user_data;
-	tcpclient_connect(&client_netsession, clnt_networker, "192.168.2.6", 7979);
+
 	//--------------------------------------------------------------------------------------
 	// GAME SCREEN INIT
 	game_scr_init(GAME_SCR_WIDTH_MIN, GAME_SCR_HEIGHT_MIN, GAME_SCR_WIDTH_BORDER, GAME_SCR_HEIGHT_BORDER);
@@ -48,7 +46,7 @@ int main(void)
 	//--------------------------------------------------------------------------------------
 	//game_txt_set_lang(TXT_LANG_ID_RU);
 	//--------------------------------------------------------------------------------------
-	screenlogin_enter();
+	screenconnect_enter();
 	//--------------------------------------------------------------------------------------
 	// Main game loop
 	//--------------------------------------------------------------------------------------

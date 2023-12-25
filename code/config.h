@@ -87,11 +87,11 @@ void TraceLog(int logLevel, const char* text, ...);
 ////////////////////////////////
 
 ////////////////////////////////
-//#define DEFAULT_SOCKET_TIMEOUT_MS (5000)
-//#define DEFAULT_THREADS_TIMEOUT (6*CLOCKS_PER_SEC)
+#define DEFAULT_SOCKET_TIMEOUT_MS (5000)
+#define DEFAULT_THREADS_TIMEOUT (6*CLOCKS_PER_SEC)
 ////////////////////////////////
-#define DEFAULT_SOCKET_TIMEOUT_MS (60000*5)
-#define DEFAULT_THREADS_TIMEOUT (5*60*CLOCKS_PER_SEC)
+//#define DEFAULT_SOCKET_TIMEOUT_MS (60000*5)
+//#define DEFAULT_THREADS_TIMEOUT (5*60*CLOCKS_PER_SEC)
 ////////////////////////////////
 
 ////////////////////////////////
@@ -104,6 +104,20 @@ void TraceLog(int logLevel, const char* text, ...);
 #define USER_PASSWORD_MAX 50
 
 #define PASSWORD_HASH_SALT "kSEo2InipM4sYIES"
+////////////////////////////////
+#define SERVER_IP_ADDRESS "192.168.2.6"
+#define SERVER_PORT 7979
+////////////////////////////////
+#ifdef _GAMESERVER
+//#define SOCKET_SEND_LAG rnd(100, 1000)
+//#define SOCKET_RECV_LAG rnd(100, 1000)
+#endif // _GAMESERVER
+#ifdef _GAMECLIENT
+#define SOCKET_SEND_LAG rnd(10, 100)
+#define SOCKET_RECV_LAG rnd(10, 100)
+//#define SOCKET_SEND_LAG 500
+//#define SOCKET_RECV_LAG 500
+#endif // _GAMECLIENT
 ////////////////////////////////
 
 #ifdef PLATFORM_ANDROID

@@ -26,6 +26,9 @@ typedef struct
 
 	void* user_data;
 
+	uint32 time_ping_send;
+	uint32 time_ping;
+
 	atom_int32 flags;
 } NETSESSION_STATE;
 

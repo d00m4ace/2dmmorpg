@@ -35,6 +35,8 @@ typedef struct PLAYER_CHAR
 	netblob_vec_t vec_netblob_send;
 	netblob_vec_t vec_netblob_recv;
 
+	uint32 time_ping;
+
 } PLAYER_CHAR;
 
 typedef struct c_vec_of(PLAYER_CHAR*) player_char_vec_t;

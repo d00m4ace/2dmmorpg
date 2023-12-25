@@ -105,6 +105,8 @@ void hal_draw_end(void);
 uint32 hal_get_draw_frame_count(void);
 bool hal_is_draw_flash_time(void);
 
+uint32 hal_time_ms(void);
+
 void hal_cls(uint32 color);
 void hal_draw_fps(int x, int y);
 void hal_draw_text(const char* text, point32 pos, int size, uint32 color); // Draw text (using default font)

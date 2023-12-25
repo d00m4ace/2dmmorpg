@@ -42,6 +42,8 @@ int main(int argc, char** argv)
 
 	while(true)
 	{
+		bool do_ping = false;
+
 		if(kbhit())
 		{
 			int c = getch();
@@ -72,6 +74,11 @@ int main(int argc, char** argv)
 				srvr->nop_sleep_time_ms += 10;
 
 				PRINT("nop_sleep_time_ms:%d", srvr->nop_sleep_time_ms);
+			}
+
+			if(c == 'p')
+			{
+				do_ping = true;
 			}
 
 			{
@@ -117,7 +124,16 @@ int main(int argc, char** argv)
 
 					NP_BLOB_FREE(blb);
 
-					//pchar->user_network_state = PLAYER_CHAR_NETWORK_STATE_DISCONNECT;					
+					if(do_ping)
+					{
+						{
+							NETPACKET_BLOB* dst = new_netpacket_blob(2 + 2);
+							netpacket_write_packet(dst, PACKET_COMMON_PING_ID, 4, NULL);
+							NP_PUSH_TOP_BLOB(&pchar->vec_netblob_send, dst);
+						}
+
+						PRINT("user_id: %d ping: %d", pchar->user_id, pchar->time_ping);
+					}
 				}
 			}
 

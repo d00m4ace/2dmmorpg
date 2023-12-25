@@ -86,6 +86,10 @@ bool tcpsocket_recv(NETSOCKET_STATE* socket_state, uint16 max_recv)
 		recv_len = rnd(1, recv_len);
 #endif // USE_TEST_RND_LIMIT
 
+#ifdef SOCKET_RECV_LAG
+		kernel_sleep(SOCKET_RECV_LAG);
+#endif // SOCKET_RECV_LAG
+
 		int recv_bytes = recv(socket_state->socket, socket_state->data_recv + socket_state->recved, recv_len, 0);
 
 		if(recv_bytes == 0) // If the connection has been gracefully closed, the return value is zero.
@@ -140,6 +144,10 @@ bool tcpsocket_send(NETSOCKET_STATE* socket_state, uint16 max_send)
 #ifdef USE_TEST_RND_LIMIT
 		send_len = rnd(1, send_len);
 #endif // USE_TEST_RND_LIMIT
+
+#ifdef SOCKET_SEND_LAG
+		kernel_sleep(SOCKET_SEND_LAG);
+#endif // SOCKET_SEND_LAG
 
 		int send_bytes = send(socket_state->socket, socket_state->data_send + socket_state->sended, send_len, 0);
 

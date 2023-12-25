@@ -1,7 +1,14 @@
 NETPACKET_BLOB* new_netpacket_blob(uint32 size)
 {
 	NETPACKET_BLOB* blob = CALLOC(1, sizeof(NETPACKET_BLOB));
+
+	assert(blob != NULL);
+	assert(size != NULL);
+
 	blob->data = CALLOC(1, size);
+
+	assert(blob != NULL);
+
 	blob->size = size;
 	return blob;
 }
@@ -21,6 +28,7 @@ NETPACKET_BLOB* netpacket_pop(netblob_vec_t* vec)
 		return NULL;
 
 	NETPACKET_BLOB* blob = (NETPACKET_BLOB*)c_vec_get(vec, 0);
+
 	c_vec_remove_at(vec, 0);
 
 	return blob;
@@ -29,6 +37,11 @@ NETPACKET_BLOB* netpacket_pop(netblob_vec_t* vec)
 void netpacket_push(netblob_vec_t* vec, NETPACKET_BLOB* blob)
 {
 	c_vec_push(vec, blob);
+}
+
+void netpacket_push_top(netblob_vec_t* vec, NETPACKET_BLOB* blob)
+{
+	c_vec_insert_at(vec, 0, blob);
 }
 
 bool netpacket_write_packet_from_blob(NETPACKET_BLOB* dst, NETPACKET_BLOB* src)
