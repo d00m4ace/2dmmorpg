@@ -21,3 +21,5 @@ and is included in the project. Namely a generator of sprite atlases, a generato
 3. Processing all players and their movements in the world
 4. Disconnecting a player from the game world
 5. Logging every player in the world into the database
+
+Source code available. Copyright d00m4ace © 2024
