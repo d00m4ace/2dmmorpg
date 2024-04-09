@@ -26,7 +26,7 @@ int main(int argc, char** argv)
 		PGconn* conn;
 		PGresult* res;
 
-		conn = PQconnectdb("host=localhost dbname=mydb user=postgres password=d00m4ace");
+		conn = PQconnectdb("host=localhost port=5433 dbname=mydb user=postgres password=d00m4ace");
 		//conn = PQconnectdb("host=192.168.2.6 dbname=mydb user=postgres password=d00m4ace");
 
 		if(PQstatus(conn) != CONNECTION_OK)
