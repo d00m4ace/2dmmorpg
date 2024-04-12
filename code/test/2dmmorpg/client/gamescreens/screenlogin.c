@@ -1,3 +1,27 @@
+typedef enum SCREENLOGIN_STATE_ENUMS
+{
+	SCREENLOGIN_STATE_LOG_IN,
+	SCREENLOGIN_STATE_LOG_IN_TRY_LOGIN,
+	SCREENLOGIN_STATE_LOG_IN_NO_USER,
+	SCREENLOGIN_STATE_LOG_IN_INCORRECT_EMAIL,
+	SCREENLOGIN_STATE_LOG_IN_INCORRECT_PASSWORD,
+
+	SCREENLOGIN_STATE_SIGN_UP,
+	SCREENLOGIN_STATE_SIGN_UP_TRY_REGISTER,
+	SCREENLOGIN_STATE_SIGN_UP_EMAIL_TAKEN,
+	SCREENLOGIN_STATE_SIGN_UP_INCORRECT_EMAIL,
+	SCREENLOGIN_STATE_SIGN_UP_INCORRECT_PASSWORD,
+
+	SCREENLOGIN_STATE_ENTER_USERNAME,
+	SCREENLOGIN_STATE_ENTER_USERNAME_TRY_REGISTER,
+	SCREENLOGIN_STATE_ENTER_USERNAME_TAKEN,
+	SCREENLOGIN_STATE_ENTER_USERNAME_INCORRECT,
+
+	SCREENLOGIN_STATE_LOGGED_IN,
+
+	SCREENLOGIN_STATE_ENUMS_COUNT,
+} SCREENLOGIN_STATE_ENUMS;
+
 typedef struct SCREENLOGIN_STATE
 {
 	GUI_DISPLAY* dsp;
@@ -25,6 +49,8 @@ typedef struct SCREENLOGIN_STATE
 	GUI_ELEM* elm_grp_PASSWORD;
 	GUI_ELEM* elm_grp_PASSWORD_AGAIN;
 	GUI_ELEM* elm_grp_EMAIL;
+
+	int state;
 
 	bool is_init;
 } SCREENLOGIN_STATE;
@@ -162,11 +188,9 @@ void screeenlogin_show_log_in(void)
 
 	state->elm_LOG_IN->flags &= ~GUI_FLG_HIDDEN;
 
-	state->elm_grp_LOGIN->flags &= ~GUI_FLG_HIDDEN;
-	state->elm_grp_PASSWORD->flags &= ~GUI_FLG_HIDDEN;
+	state->elm_grp_EMAIL->flags &= ~GUI_FLG_HIDDEN;
 
 	state->elm_BUTTON_LOGIN->flags &= ~GUI_FLG_HIDDEN;
-	state->elm_BUTTON_REGISTER->flags &= ~GUI_FLG_HIDDEN;
 }
 
 void screeenlogin_show_sign_up(void)
@@ -221,6 +245,43 @@ void screenlogin_update(void)
 
 				if(packet_is_read)
 					PRINT("SERVER WELCOME\n");			
+			}
+		}
+	}
+
+	{
+		GUI_ELEM* elm = gui_input_elm_released();
+
+		if(elm)
+		{
+			SCREENLOGIN_STATE* state = &screenlogin_state;
+
+			if(elm == state->elm_BUTTON_LOGIN)
+			{
+				PRINT("LOGIN\n");
+
+				const char* user_email = gui_text_input_get_txt(state->elm_INPUT_EMAIL);
+
+				if(!is_valid_email(user_email))
+				{
+					screenlogin_hide_all_messages();
+					state->elm_INCORRECT_EMAIL->flags &= ~GUI_FLG_HIDDEN;
+					gui_layout_tile(state->pln);
+
+					state->state = SCREENLOGIN_STATE_LOG_IN_INCORRECT_EMAIL;
+				}
+				else
+				{
+					screenlogin_hide_all_messages();
+					gui_layout_tile(state->pln);
+
+					state->state = SCREENLOGIN_STATE_LOG_IN_TRY_LOGIN;
+				}
+			}
+
+			if(elm == state->elm_BUTTON_REGISTER)
+			{
+				PRINT("REGISTER\n");
 			}
 		}
 	}
