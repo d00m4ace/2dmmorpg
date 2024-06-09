@@ -9,14 +9,12 @@ cd <this dir>
 vcpkg integrate install
 vcpkg install --triplet x64-windows-static
 
-in VS2022
-Tools > Options > vcpkg package manager setting
-
-
 vcpkg list
 vcpkg search raylib
 vcpkg install --triplet x64-windows-static
 
+in VS2022
+Tools > Options > vcpkg package manager setting
 https://devblogs.microsoft.com/cppblog/vcpkg-is-now-included-with-visual-studio/
 [v] enable automatic activation of vcpkg envir
 [v] use custom path to vcpkg.exe:
