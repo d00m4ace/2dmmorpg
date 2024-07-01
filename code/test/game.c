@@ -35,13 +35,13 @@
 ///////////////////////////////////////////////////////////////
 //#include "game-empty.c"
 //#include "game-ui.c"
-//#include "chrs2mobs.c"
+#include "chrs2mobs.c"
 //#include "pixeleditor/main.c"
 //#include "tools/imgimport.c"
 //#include "tools/imgsplit.c"
 //#include "tools/codegen.c"
 ///////////////////////////////////////////////////////////////
-#define _NETWORK
+//#define _NETWORK
 //#define _GAMESERVER
 //#define _GAMECLIENT
 #ifdef _NETWORK
